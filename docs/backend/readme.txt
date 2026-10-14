@@ -1,1 +1,0 @@
-Aqui full logica interna que pueda ser necesario

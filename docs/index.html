@@ -1,16 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Harmony Heights, academia de música y artes escénicas para aprender, crear y compartir.">
+    <title>Harmony Heights | Academia de música y artes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Estilo interno intencional: ejemplo puntual solicitado en la rúbrica. -->
+    <style>.home-highlight { text-decoration: underline wavy var(--gold) 3px; text-underline-offset: .18em; }</style>
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header>
-        <title>Harmony Heights</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/styles.css">
-    </header>
-    <body>
-        <main>
+        <nav class="navbar navbar-expand-lg site-nav sticky-top" aria-label="Navegación principal">
             <div class="container">
-                Esta por rellenar esta monda xddddddddddd
+                <a class="navbar-brand d-flex align-items-center" href="index.html"><span class="brand-mark">HH</span>Harmony Heights</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="programas.html">Programas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="musica.html">Música</a></li>
+                        <li class="nav-item"><a class="nav-link" href="danza.html">Danza</a></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-primary" href="contacto.html">Solicitar información</a></li>
+                    </ul>
+                </div>
             </div>
-        </main>
-    </body>
+        </nav>
+    </header>
+
+    <main id="contenido">
+        <section class="hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 hero-copy">
+                        <span class="eyebrow">Academia de música y artes escénicas</span>
+                        <h1>Tu talento merece <span class="home-highlight">altura.</span></h1>
+                        <p class="lead">Formación creativa con bases sólidas, acompañamiento cercano y espacios para convertir la práctica en una voz propia.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a class="btn btn-primary btn-lg" href="programas.html">Explorar programas</a>
+                            <a class="btn btn-outline-dark btn-lg" href="contacto.html">Agendar orientación</a>
+                        </div>
+                        <div class="trust-row" aria-label="Características de la academia">
+                            <span>Niveles desde inicial</span><span>Modalidad presencial</span><span>Clases individuales y grupales</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 hero-media">
+                        <img class="hero-image" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1100&q=85" alt="Estudiante trabajando en una sala de música" width="900" height="1100">
+                        <div class="floating-note"><strong>Aprender haciendo</strong><span>La técnica se convierte en proyectos, ensayos y presentaciones.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-space" aria-labelledby="programas-destacados">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Rutas de aprendizaje</span>
+                    <h2 id="programas-destacados">Encuentra el escenario que va contigo.</h2>
+                    <p>No tienes que llegar siendo experto. Elige un área y nosotros te ayudamos a ubicar el nivel adecuado.</p>
+                </div>
+                <div class="row g-4">
+                    <article class="col-md-6 col-lg-4 reveal">
+                        <div class="program-card">
+                            <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80" alt="Manos tocando un piano" loading="lazy" width="900" height="600">
+                            <div class="program-card-body"><span class="badge rounded-pill">Música</span><h3>Interpretación musical</h3><p>Piano, guitarra, canto y ensamble con lectura, oído y repertorio progresivo.</p><a class="text-link" href="musica.html">Ver ruta musical →</a></div>
+                        </div>
+                    </article>
+                    <article class="col-md-6 col-lg-4 reveal">
+                        <div class="program-card">
+                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=900&q=80" alt="Grupo ensayando una coreografía" loading="lazy" width="900" height="600">
+                            <div class="program-card-body"><span class="badge rounded-pill">Danza</span><h3>Movimiento escénico</h3><p>Entrenamiento corporal, musicalidad y presencia para distintos estilos y edades.</p><a class="text-link" href="danza.html">Ver ruta de danza →</a></div>
+                        </div>
+                    </article>
+                    <article class="col-md-6 col-lg-4 reveal">
+                        <div class="program-card">
+                            <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80" alt="Escenario de teatro iluminado" loading="lazy" width="900" height="600">
+                            <div class="program-card-body"><span class="badge rounded-pill">Escena</span><h3>Laboratorio creativo</h3><p>Un espacio interdisciplinario para integrar música, cuerpo y puesta en escena.</p><a class="text-link" href="programas.html">Conocer todos →</a></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-space surface-dark" aria-labelledby="metodo">
+            <div class="container">
+                <div class="section-heading reveal"><span class="eyebrow">Nuestro método</span><h2 id="metodo">Disciplina clásica, mirada actual.</h2><p>Respetamos los fundamentos que han formado artistas por generaciones y los conectamos con herramientas creativas de hoy.</p></div>
+                <div class="feature-grid reveal">
+                    <article class="feature-item"><span class="feature-number">01 · BASE</span><h3>Técnica comprensible</h3><p>Objetivos claros, práctica guiada y retroalimentación que sí se puede aplicar.</p></article>
+                    <article class="feature-item"><span class="feature-number">02 · PROCESO</span><h3>Aprendizaje activo</h3><p>Ejercicios, repertorio y proyectos para pasar de entender a realmente hacer.</p></article>
+                    <article class="feature-item"><span class="feature-number">03 · ESCENA</span><h3>Confianza gradual</h3><p>Muestras internas y experiencias colaborativas sin lanzar a nadie al vacío.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-space" aria-labelledby="proceso">
+            <div class="container">
+                <div class="section-heading reveal"><span class="eyebrow">Empieza sin enredos</span><h2 id="proceso">Tres pasos. Cero drama.</h2></div>
+                <div class="steps">
+                    <article class="step reveal"><span class="step-index">1</span><h3>Cuéntanos tu interés</h3><p>Completa el formulario con el área, edad y horario que buscas.</p></article>
+                    <article class="step reveal"><span class="step-index">2</span><h3>Recibe orientación</h3><p>Revisamos tu perfil y te recomendamos nivel, formato y ruta.</p></article>
+                    <article class="step reveal"><span class="step-index">3</span><h3>Inicia tu formación</h3><p>Confirma tu grupo y comienza con un objetivo de aprendizaje claro.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-5">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <div class="row align-items-center g-4"><div class="col-lg-8"><span class="eyebrow text-white">Tu siguiente paso</span><h2>Haz espacio para eso que siempre quisiste aprender.</h2><p class="mb-lg-0">Déjanos tus datos y te orientamos sin compromiso.</p></div><div class="col-lg-4 text-lg-end"><a class="btn btn-light btn-lg" href="contacto.html">Quiero información</a></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container"><div class="row g-4"><div class="col-lg-5"><a class="navbar-brand text-white d-inline-flex align-items-center mb-3" href="index.html"><span class="brand-mark">HH</span>Harmony Heights</a><p>Academia demostrativa de música y artes escénicas creada como proyecto académico.</p></div><div class="col-lg-7"><ul class="footer-links justify-content-lg-end"><li><a href="nosotros.html">Nosotros</a></li><li><a href="programas.html">Programas</a></li><li><a href="contacto.html">Contacto</a></li><li><a href="INFORME_TECNICO.md">Informe técnico</a></li></ul></div></div><hr class="border-light opacity-25"><div class="d-flex flex-wrap justify-content-between gap-2"><small>© <span data-current-year></span> Harmony Heights.</small><small>Proyecto educativo · Dominio propuesto: harmonyheights.edu.pe</small></div></div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
 </html>

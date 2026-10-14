@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Solicita orientación sobre los programas de Harmony Heights.">
+    <title>Contacto | Harmony Heights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header><nav class="navbar navbar-expand-lg site-nav sticky-top" aria-label="Navegación principal"><div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><span class="brand-mark">HH</span>Harmony Heights</a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="mainNav"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li><li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li><li class="nav-item"><a class="nav-link" href="programas.html">Programas</a></li><li class="nav-item"><a class="nav-link" href="musica.html">Música</a></li><li class="nav-item"><a class="nav-link" href="danza.html">Danza</a></li><li class="nav-item ms-lg-2"><a class="btn btn-primary" href="contacto.html">Solicitar información</a></li></ul></div></div></nav></header>
+    <main id="contenido">
+        <section class="page-hero"><div class="container"><span class="eyebrow">Contacto y registro</span><h1>Cuéntanos qué te gustaría aprender.</h1><p class="lead">Completa el formulario y recibirás una recomendación de ruta. En este proyecto, el envío se procesa con PHP cuando el backend está activo.</p></div></section>
+        <section class="section-space"><div class="container"><div class="row g-5">
+            <div class="col-lg-7">
+                <div class="form-shell reveal">
+                    <h2 class="h1 mb-2">Solicitud de orientación</h2><p class="mb-4">Los campos con * son obligatorios.</p>
+                    <form id="interestForm" action="backend/registro.php" method="post" novalidate>
+                        <div class="hp-field" aria-hidden="true"><label for="website">No completar</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label" for="nombre">Nombre completo *</label><input class="form-control" id="nombre" name="nombre" type="text" minlength="3" maxlength="80" autocomplete="name" required><div class="invalid-feedback">Ingresa al menos 3 caracteres.</div></div>
+                            <div class="col-md-6"><label class="form-label" for="correo">Correo electrónico *</label><input class="form-control" id="correo" name="correo" type="email" maxlength="120" autocomplete="email" required><div class="invalid-feedback">Ingresa un correo válido.</div></div>
+                            <div class="col-md-6"><label class="form-label" for="telefono">Teléfono *</label><input class="form-control" id="telefono" name="telefono" type="tel" pattern="[0-9+() -]{7,20}" maxlength="20" autocomplete="tel" required><div class="invalid-feedback">Usa entre 7 y 20 caracteres válidos.</div></div>
+                            <div class="col-md-6"><label class="form-label" for="edad">Edad del estudiante *</label><input class="form-control" id="edad" name="edad" type="number" min="5" max="99" required><div class="invalid-feedback">Ingresa una edad entre 5 y 99 años.</div></div>
+                            <div class="col-md-6"><label class="form-label" for="programa">Programa de interés *</label><select class="form-select" id="programa" name="programa" required><option value="">Selecciona una opción</option><option value="musica">Música</option><option value="danza">Danza</option><option value="escena">Laboratorio escénico</option><option value="orientacion">Aún no lo sé</option></select><div class="invalid-feedback">Selecciona un programa.</div></div>
+                            <div class="col-md-6"><label class="form-label" for="horario">Horario preferido *</label><select class="form-select" id="horario" name="horario" required><option value="">Selecciona una opción</option><option value="manana">Mañana</option><option value="tarde">Tarde</option><option value="sabado">Sábado</option></select><div class="invalid-feedback">Selecciona un horario.</div></div>
+                            <div class="col-12"><label class="form-label" for="mensaje">Cuéntanos tu objetivo <span class="fw-normal">(opcional)</span></label><textarea class="form-control" id="mensaje" name="mensaje" maxlength="500" placeholder="Ejemplo: quiero comenzar desde cero y aprender a tocar mis primeras canciones."></textarea></div>
+                            <div class="col-12"><div class="form-check"><input class="form-check-input" id="consentimiento" name="consentimiento" type="checkbox" value="acepto" required><label class="form-check-label" for="consentimiento">Acepto el uso de estos datos para responder mi solicitud. *</label><div class="invalid-feedback">Necesitamos tu consentimiento para continuar.</div></div></div>
+                            <div class="col-12"><button class="btn btn-primary btn-lg" type="submit">Enviar solicitud</button><p class="small mt-3 mb-0">Demostración académica: no ingreses datos personales reales durante una exposición pública.</p><div id="formStatus" class="form-status" role="status" aria-live="polite" tabindex="-1"></div></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <aside class="col-lg-5">
+                <div class="contact-card reveal"><span class="eyebrow">Información</span><h2 class="h1">Hablemos claro.</h2><p>Estos datos son demostrativos y sirven para presentar una experiencia institucional completa.</p><ul class="contact-list"><li><small>Correo</small><strong>orientacion@harmonyheights.edu.pe</strong></li><li><small>Teléfono</small><strong>+51 900 000 000</strong></li><li><small>Atención</small><strong>Lunes a sábado · 9:00 a 18:00</strong></li><li><small>Ubicación referencial</small><strong>Lima, Perú</strong></li></ul></div>
+                <div class="map-card reveal">
+                    <iframe title="Mapa referencial del centro de Lima" src="https://www.openstreetmap.org/export/embed.html?bbox=-77.0600%2C-12.0800%2C-77.0200%2C-12.0400&amp;layer=mapnik&amp;marker=-12.056%2C-77.042" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="map-card-body"><strong>Ubicación referencial</strong><p class="mb-2">Centro de Lima, Perú.</p><a class="text-link" href="https://www.openstreetmap.org/?mlat=-12.056&amp;mlon=-77.042#map=14/-12.056/-77.042" target="_blank" rel="noopener noreferrer">Abrir mapa completo →</a></div>
+                </div>
+            </aside>
+        </div></div></section>
+    </main>
+    <footer class="site-footer"><div class="container"><div class="row g-4"><div class="col-lg-5"><a class="navbar-brand text-white d-inline-flex align-items-center mb-3" href="index.html"><span class="brand-mark">HH</span>Harmony Heights</a><p>Academia demostrativa de música y artes escénicas creada como proyecto académico.</p></div><div class="col-lg-7"><ul class="footer-links justify-content-lg-end"><li><a href="nosotros.html">Nosotros</a></li><li><a href="programas.html">Programas</a></li><li><a href="contacto.html">Contacto</a></li><li><a href="INFORME_TECNICO.md">Informe técnico</a></li></ul></div></div><hr class="border-light opacity-25"><div class="d-flex flex-wrap justify-content-between gap-2"><small>© <span data-current-year></span> Harmony Heights.</small><small>Proyecto educativo · Dominio propuesto: harmonyheights.edu.pe</small></div></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="js/script.js"></script>
+</body>
+</html>
