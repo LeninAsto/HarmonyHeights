@@ -1,4 +1,6 @@
-import { connectFirebase } from "./firebase.js";
+import { connectFirebase, signInWithGoogle } from "./firebase.js";
+
+import { formatSchedule } from "./horarios.js";
 
 const loginForm = document.querySelector("#loginForm");
 const loginPanel = document.querySelector("#loginPanel");
@@ -14,7 +16,6 @@ const programNames = {
   escena: "Laboratorio escénico",
   orientacion: "Orientación",
 };
-const scheduleNames = { manana: "Mañana", tarde: "Tarde", sabado: "Sábado" };
 let firebase;
 let records = [];
 let visibleRecords = [];
@@ -172,7 +173,7 @@ function renderRecords() {
       record.telefono,
       record.edad,
       programNames[record.programa],
-      scheduleNames[record.horario],
+      formatSchedule(record),
       record.mensaje,
     ];
     for (const value of values) {
@@ -243,7 +244,7 @@ exportButton.addEventListener("click", () => {
       record.telefono,
       record.edad,
       programNames[record.programa],
-      scheduleNames[record.horario],
+      formatSchedule(record),
       record.mensaje,
       record.consentimiento,
     ]);
@@ -266,3 +267,10 @@ function showStatus(message, type) {
   status.className = "form-status show " + type;
   status.focus();
 }
+
+document.querySelector("#adminGoogleLogin").addEventListener("click", async (event) => {
+  event.currentTarget.disabled = true;
+  try { if (!firebase) await startAdmin(); if (!firebase) return; await signInWithGoogle(); }
+  catch { showStatus("No se pudo acceder con Google. Permite la ventana emergente y vuelve a intentar.", "error"); }
+  finally { document.querySelector("#adminGoogleLogin").disabled = false; }
+});

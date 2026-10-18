@@ -25,8 +25,7 @@ jobs:
       - name: Preparar sitio estático
         run: |
           mkdir -p _site
-          rsync -a docs/ _site/
-          sed 's|\.\./docs/|./|g' "trabajo final/presentacion.html" > _site/presentacion.html
+          cp -a docs/. _site/
           touch _site/.nojekyll
           test -f _site/index.html
           test -f _site/js/firebase-config.js

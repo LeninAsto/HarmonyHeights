@@ -20,6 +20,8 @@
     />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/reproductor.css" />
+    <link rel="stylesheet" href="css/tema.css" />
+    <script src="js/tema.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -42,6 +44,7 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
+          <button class="theme-toggle ms-auto me-2" type="button" data-theme-toggle aria-pressed="false">☾ Tema oscuro</button>
           <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
               <li class="nav-item">
@@ -91,6 +94,13 @@
                   Los campos con * son obligatorios. Solo usaremos tus datos
                   para atender esta solicitud.
                 </p>
+                <div class="auth-card mb-4">
+                  <h3>Continúa con tu cuenta</h3>
+                  <p>Inicia sesión con Google para enviar tu solicitud.</p>
+                  <button type="button" id="googleLogin" class="btn btn-outline-dark">Continuar con Google</button>
+                  <button type="button" id="googleLogout" class="btn btn-outline-dark" hidden>Cerrar sesión</button>
+                  <p id="googleAccount" class="small mt-2" role="status" aria-live="polite">Aún no has iniciado sesión.</p>
+                </div>
                 <form id="interestForm" method="post">
                   <noscript
                     ><p>
@@ -194,21 +204,31 @@
                       </div>
                     </div>
                     <div class="col-md-6">
+                      <label class="form-label" for="dia">Día preferido *</label>
+                      <select class="form-select" id="dia" name="dia" required aria-describedby="scheduleHelp">
+                        <option value="">Selecciona un día</option>
+                        <option value="lunes">Lunes</option><option value="martes">Martes</option>
+                        <option value="miercoles">Miércoles</option><option value="jueves">Jueves</option>
+                        <option value="viernes">Viernes</option><option value="sabado">Sábado</option>
+                      </select>
+                      <div class="invalid-feedback">Selecciona un día.</div>
+                    </div>
+                    <div class="col-md-6">
                       <label class="form-label" for="horario"
                         >Horario preferido *</label
                       ><select
                         class="form-select"
                         id="horario"
                         name="horario"
+                        aria-describedby="scheduleHelp"
+                        disabled
                         required
                       >
-                        <option value="">Selecciona una opción</option>
-                        <option value="manana">Mañana</option>
-                        <option value="tarde">Tarde</option>
-                        <option value="sabado">Sábado</option>
+                        <option value="">Primero selecciona un día</option>
                       </select>
-                      <div class="invalid-feedback">Selecciona un horario.</div>
+                      <div class="invalid-feedback">Selecciona una franja disponible para ese día.</div>
                     </div>
+                    <div class="col-12"><p id="scheduleHelp" class="small" aria-live="polite">Horarios de referencia, hora de Lima. La academia confirmará la disponibilidad de tu preferencia. Domingos sin atención.</p></div>
                     <div class="col-12">
                       <label class="form-label" for="mensaje"
                         >Cuéntanos tu objetivo
@@ -240,6 +260,12 @@
                       </div>
                     </div>
                     <div class="col-12">
+                      <div class="captcha-panel mb-4" role="group" aria-labelledby="captchaLabel">
+                        <h3 id="captchaLabel">Verificación de seguridad</h3>
+                        <div id="turnstileWidget"></div>
+                        <p id="captchaStatus" class="small mt-2 mb-2" role="status" aria-live="polite">Cargando verificación…</p>
+                        <button type="button" id="captchaRetry" class="btn btn-outline-dark" hidden>Reintentar verificación</button>
+                      </div>
                       <button
                         class="btn btn-primary btn-lg"
                         type="submit"
@@ -248,6 +274,8 @@
                         Enviar solicitud
                       </button>
                       <p class="small mt-3 mb-0">
+                        Protegido por Cloudflare Turnstile. Consulta la
+                        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Política de privacidad de Cloudflare</a>.
                         Demostración académica: no ingreses datos personales
                         reales durante una exposición pública.
                       </p>
@@ -281,7 +309,7 @@
                   </li>
                   <li>
                     <small>Atención</small
-                    ><strong>Lunes a sábado · 9:00 a 18:00</strong>
+                    ><strong>Lun–vie · 9:00–12:30 y 15:00–18:30; sáb · 9:00–12:30</strong>
                   </li>
                   <li>
                     <small>Ubicación referencial</small

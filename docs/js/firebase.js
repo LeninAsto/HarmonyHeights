@@ -1,50 +1,44 @@
-import { firebaseConfig } from "./firebase-config.js";
+import { firebaseConfig, functionsRegion } from "./firebase-config.js";
 
-let connection;
+let connectionPromise;
+export function connectFirebase() {
+  if (!connectionPromise) connectionPromise = initialize().catch(error => {
+    connectionPromise = undefined;
+    throw error;
+  });
+  return connectionPromise;
+}
 
-export async function connectFirebase() {
-  if (
-    !firebaseConfig.apiKey ||
-    !firebaseConfig.projectId ||
-    !firebaseConfig.appId
-  ) {
-    throw new Error(
-      "Firebase todavía no está configurado. Consulta la guía de instalación del proyecto.",
-    );
-  }
-  if (connection) return connection;
-
-  const appSdk = await import(
-    "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js"
-  );
-  const authSdk = await import(
-    "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js"
-  );
-  const databaseSdk = await import(
-    "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js"
-  );
+async function initialize() {
+  const base = "https://www.gstatic.com/firebasejs/13.0.0/";
+  const [appSdk, authSdk, databaseSdk, functionsSdk] = await Promise.all([
+    import(base + "firebase-app.js"), import(base + "firebase-auth.js"),
+    import(base + "firebase-firestore.js"), import(base + "firebase-functions.js"),
+  ]);
   const app = appSdk.initializeApp(firebaseConfig);
   const auth = authSdk.getAuth(app);
   await authSdk.setPersistence(auth, authSdk.browserSessionPersistence);
-  connection = {
-    auth: auth,
-    database: databaseSdk.getFirestore(app),
-    authSdk: authSdk,
-    databaseSdk: databaseSdk,
-  };
-  return connection;
+  await auth.authStateReady();
+  return {auth, database: databaseSdk.getFirestore(app), authSdk, databaseSdk,
+    functions: functionsSdk.getFunctions(app, functionsRegion), functionsSdk};
 }
 
-export async function saveRegistration(data) {
+export async function signInWithGoogle() {
   const firebase = await connectFirebase();
-  if (!firebase.auth.currentUser) {
-    await firebase.authSdk.signInAnonymously(firebase.auth);
+  const provider = new firebase.authSdk.GoogleAuthProvider();
+  provider.setCustomParameters({prompt: "select_account"});
+  return firebase.authSdk.signInWithPopup(firebase.auth, provider);
+}
+
+export async function saveRegistration(data, turnstileToken) {
+  const firebase = await connectFirebase();
+  const user = firebase.auth.currentUser;
+  if (!user || !user.providerData.some(provider => provider.providerId === "google.com")) {
+    throw Object.assign(new Error("Inicia sesión con Google antes de enviar tu solicitud."), {code: "app/auth-required"});
   }
-  data.uid = firebase.auth.currentUser.uid;
-  data.createdAt = firebase.databaseSdk.serverTimestamp();
-  const registrations = firebase.databaseSdk.collection(
-    firebase.database,
-    "solicitudes",
-  );
-  return firebase.databaseSdk.addDoc(registrations, data);
+  if (!turnstileToken) throw Object.assign(new Error("Completa la verificación de Cloudflare antes de enviar."), {code: "app/captcha-required"});
+  const submit = firebase.functionsSdk.httpsCallable(firebase.functions, "submitRegistration", {timeout: 20000});
+  const result = await submit({registration: data, turnstileToken});
+  if (typeof result.data?.id !== "string" || !result.data.id) throw new Error("No registration confirmation");
+  return result.data;
 }

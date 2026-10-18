@@ -6,3 +6,7 @@ export const firebaseConfig = {
   messagingSenderId: "833496028843",
   appId: "1:833496028843:web:5cced832613736a53749ee",
 };
+
+// Solo la clave PÚBLICA del widget Turnstile. La secreta se guarda en Secret Manager.
+export const turnstileSiteKey = "0x4AAAAAAFaSXbT6ouSzoh79";
+export const functionsRegion = "us-central1";

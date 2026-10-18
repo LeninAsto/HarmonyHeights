@@ -13,28 +13,9 @@ service cloud.firestore {
 
         match /solicitudes/{id} {
             allow read: if isAdmin();
-            allow update, delete: if false;
-            allow create: if request.auth != null
-                && request.resource.data.keys().hasAll(['nombre', 'correo', 'telefono', 'edad', 'programa', 'horario', 'mensaje', 'consentimiento', 'uid', 'createdAt'])
-                && request.resource.data.keys().hasOnly(['nombre', 'correo', 'telefono', 'edad', 'programa', 'horario', 'mensaje', 'consentimiento', 'uid', 'createdAt'])
-                && request.resource.data.uid == request.auth.uid
-                && request.resource.data.createdAt == request.time
-                && request.resource.data.nombre is string
-                && request.resource.data.nombre.size() >= 3
-                && request.resource.data.nombre.size() <= 80
-                && request.resource.data.correo is string
-                && request.resource.data.correo.size() <= 120
-                && request.resource.data.correo.matches('^[^@\\s]+@[^@\\s]+[.][^@\\s]+$')
-                && request.resource.data.telefono is string
-                && request.resource.data.telefono.matches('^[0-9+() -]{7,20}$')
-                && request.resource.data.edad is int
-                && request.resource.data.edad >= 5
-                && request.resource.data.edad <= 99
-                && request.resource.data.programa in ['musica', 'danza', 'escena', 'orientacion']
-                && request.resource.data.horario in ['manana', 'tarde', 'sabado']
-                && request.resource.data.mensaje is string
-                && request.resource.data.mensaje.size() <= 500
-                && request.resource.data.consentimiento == 'acepto';
+            // Only the server function writes after Google + Turnstile verification.
+            // Admin SDK writes bypass rules; validation lives in functions/registration.js.
+            allow create, update, delete: if false;
         }
     }
 }

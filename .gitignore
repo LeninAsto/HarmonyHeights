@@ -3,3 +3,7 @@ firestore-debug.log
 ui-debug.log
 .firebase/
 _site/
+node_modules/
+functions/.env*
+functions/.secret.local
+*.zip

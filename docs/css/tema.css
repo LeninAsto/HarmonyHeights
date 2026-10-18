@@ -1,0 +1,71 @@
+/* Navy, coral and gold retain the academy's visual identity at night. */
+.theme-toggle {
+  border: 1px solid currentColor;
+  border-radius: 2rem;
+  background: transparent;
+  color: inherit;
+  padding: .45rem .8rem;
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.theme-toggle:focus-visible { outline: 3px solid #e8a16a; outline-offset: 3px; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"]:not(.a11y-contrast) {
+  --ink: #f5ede1;
+  --ink-soft: #c0ccdb;
+  --paper: #0d1929;
+  --white: #17283c;
+  --coral: #ffad95;
+  --coral-dark: #ffc4ad;
+  --line: #53647b;
+  --shadow: 0 20px 60px #0005;
+  --bs-body-color: #f5ede1;
+  --bs-body-bg: #0d1929;
+  --bs-secondary-color: #c0ccdb;
+  --bs-border-color: #53647b;
+}
+html[data-theme="dark"]:not(.a11y-contrast) .site-nav { background: #0d1929f2; }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.surface-dark,.feature-item,.utility-button) { background: #20364e; color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.btn-primary,.brand-mark) { background: #ffad95; color: #211814; border-color: #ffad95; }
+html[data-theme="dark"]:not(.a11y-contrast) .btn-primary:hover { background: #ffc4ad; }
+html[data-theme="dark"]:not(.a11y-contrast) .btn-outline-dark { color: #f5ede1; border-color: #9aacc2; }
+html[data-theme="dark"]:not(.a11y-contrast) .btn-outline-dark:hover { background: #2b4059; }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.form-control,.form-select) { background-color: #102035; color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) .form-control::placeholder { color: #a6b6c9; }
+html[data-theme="dark"]:not(.a11y-contrast) .site-footer { color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.site-footer a:hover,.mobile-contact-button) { color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) .accordion { --bs-accordion-bg: #17283c; --bs-accordion-color: #f5ede1; --bs-accordion-btn-color: #f5ede1; }
+.auth-card { padding: 1.4rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--paper); }
+.auth-card h3 { font-size: 1.4rem; }
+/* Presentation uses its own palette. */
+html[data-theme="dark"] .presentation-page {
+  --primary: #ffb59d; --on-primary: #38160b; --primary-box: #4d3028;
+  --secondary-box: #353048; --tertiary: #bdcf94; --tertiary-box: #303e25;
+  --surface: #151c29; --surface-box: #111826; --surface-high: #263247;
+  --ink: #f5ede1; --soft: #c4cbd7; --line: #9b8b84;
+}
+html[data-theme="dark"] .presentation-page :is(.top-bar,.bottom-bar,.card,.demo-toolbar) { background: #1b2638; color: #f5ede1; }
+html[data-theme="dark"] .presentation-page .tonal { background: var(--primary-box); }
+html[data-theme="dark"] .presentation-page .green { background: var(--tertiary-box); }
+html[data-theme="dark"] .presentation-page button { color: var(--ink); background: var(--surface-high); }
+@media (max-width: 600px) { .top-meta { display: none; } }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.page-hero,.hero + .section-space) { background: #182c38; }
+html[data-theme="dark"]:not(.a11y-contrast) :is(.cta-band,.step-index) { background: #3b2c27; color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) .cta-band p { color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) .filter-btn.active { background: #ffad95; color: #211814; border-color: #ffad95; }
+html[data-theme="dark"]:not(.a11y-contrast) .invalid-feedback { color: #ffb4ac; }
+.form-status, #googleAccount { overflow-wrap: anywhere; }
+html[data-theme="dark"] .presentation-page .slide {
+  background: radial-gradient(circle at 92% 12%, #4d302870 0 12%, transparent 12.2%), radial-gradient(circle at 7% 90%, #303e2570 0 10%, transparent 10.2%), var(--surface);
+}
+html[data-theme="dark"] .presentation-page .step { background: #3b2c27; color: #ffb59d; }
+html[data-theme="dark"]:not(.a11y-contrast) .music-player { background: #17283c; color: #f5ede1; border-color: #53647b; }
+html[data-theme="dark"]:not(.a11y-contrast) .music-player button { background: #20364e; color: #f5ede1; }
+html[data-theme="dark"]:not(.a11y-contrast) .music-player .music-toggle { background: #ffad95; color: #211814; }
+html[data-theme="dark"]:not(.a11y-contrast) .music-status { color: #c0ccdb; }
+html[data-theme="dark"]:not(.a11y-contrast) .music-disc { background: #20364e; }
+
+.captcha-panel { padding: 1rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--paper); }
+.captcha-panel h3 { font-size: 1.2rem; }
+#turnstileWidget { min-height: 140px; }

@@ -1,69 +1,128 @@
-# Activar Firebase paso a paso
+# Google, Firestore y Cloudflare Turnstile
 
-La web tiene incorporada la configuración pública de `harmony-heights-41e77`. Aún debes habilitar los servicios y publicar las reglas desde tu cuenta. Tener la configuración no activa la base de datos.
+La web usa la configuración pública de Firebase de `harmony-heights-41e77`.
+El formulario necesita una sesión de Google y una verificación Turnstile válida.
+Los registros se crean en una Cloud Function; el navegador solo puede leer el
+panel cuando su usuario figura en `admins`.
 
-## 1. Crear Firestore
+## 1. Configurar Firebase
 
-1. Abre https://console.firebase.google.com/project/harmony-heights-41e77/overview.
-2. En Compilación → Firestore Database, crea una base de datos Cloud Firestore Standard con identificador `(default)`.
-3. Elige la región adecuada y empieza en modo de producción.
-4. Abre la pestaña Reglas, sustituye su contenido por el archivo `firestore.rules` de la raíz de este proyecto y pulsa Publicar.
+1. En Firebase Console, abre el proyecto `harmony-heights-41e77`.
+2. Crea Cloud Firestore Standard con identificador `(default)` en modo producción.
+3. En Authentication → Métodos de acceso, habilita **Google** y elige el correo de
+   soporte. Correo/contraseña es opcional para administradores.
+4. En Authentication → Configuración → Dominios autorizados, añade `localhost`
+   y `leninasto.github.io`. Añade cualquier nuevo dominio donde alojes la web.
+5. Las Cloud Functions requieren un proyecto con plan **Blaze** y facturación
+   habilitada. Revisa sus cuotas y configura alertas de presupuesto.
 
-Las reglas permiten crear solicitudes con campos y valores válidos a usuarios autenticados. Los visitantes usarán una sesión anónima. Solo las cuentas autorizadas en `admins` pueden leer solicitudes. El navegador no puede crear administradores, modificar registros ni eliminarlos.
+## 2. Configurar el widget Cloudflare
 
-## 2. Habilitar Authentication
+1. En Cloudflare → Turnstile, abre el widget y selecciona el modo **Managed**.
+2. Autoriza `leninasto.github.io`, `localhost` y `127.0.0.1` si usas esa dirección
+   para desarrollo. Los dominios se introducen sin esquema, puerto ni ruta.
+3. La clave pública ya está conectada en `docs/js/firebase-config.js` mediante
+   `turnstileSiteKey`. Cambia ese valor si creas otro widget.
+4. **Regenera la clave secreta que apareció en la captura compartida.** No la
+   escribas en HTML, JavaScript, GitHub, un ZIP ni en el chat.
+5. Guarda la nueva clave secreta en Firebase Secret Manager con el comando de
+   despliegue del siguiente apartado. El comando la solicita de forma segura.
 
-1. En Compilación → Authentication, pulsa Comenzar.
-2. En Método de acceso, habilita Anónimo.
-3. Habilita Correo electrónico/contraseña. No necesitas el acceso mediante enlace de correo.
-4. Revisa Configuración → Dominios autorizados. Añade `localhost` para las pruebas y `leninasto.github.io` para la web publicada.
+El widget usa la acción `contacto`. La función verifica con Cloudflare el token,
+la acción y el dominio. Los tokens vencen a los cinco minutos y son de un solo
+uso; la web reinicia el widget después de cada intento de envío al servidor.
+El CAPTCHA puede resolverse sin mostrar un desafío visual, según Cloudflare.
 
-## 3. Autorizar tu cuenta administrativa
+## 3. Instalar y desplegar el servidor
 
-1. En Authentication → Usuarios → Añadir usuario, crea tu cuenta con tu correo y una contraseña propia. No compartas la contraseña por chat ni la pongas en el código.
-2. Copia el UID de ese usuario.
-3. Ve a Firestore Database → Datos → Iniciar colección.
-4. Nombre de colección: `admins`. ID del documento: el UID exacto que copiaste.
-5. Añade un campo `nombre`, de tipo string, con tu nombre, y guarda el documento.
+En tu equipo, instala Node.js **22** y Firebase CLI, y ejecuta desde la raíz:
 
-La existencia de ese documento concede permiso de lectura. Un usuario registrado sin ese documento no puede consultar las solicitudes. Crea este permiso únicamente para personas autorizadas.
+```sh
+npm --prefix functions ci
+npm --prefix functions test
+npm install -g firebase-tools
+firebase login
+firebase functions:secrets:set TURNSTILE_SECRET_KEY --project harmony-heights-41e77
+firebase deploy --only functions:submitRegistration,firestore:rules --project harmony-heights-41e77
+```
 
-## 4. Probar el recorrido
+La función se llama `submitRegistration` y se despliega en `us-central1`.
+`docs/js/firebase-config.js` contiene la misma región. Firebase CLI ejecuta los
+tests antes del despliegue. Si la consola pide habilitar APIs necesarias,
+completa ese paso en tu cuenta.
 
-1. Ejecuta `python -m http.server 8000` desde la raíz del proyecto.
-2. Abre http://localhost:8000/docs/contacto.html.
-3. Completa una solicitud con datos ficticios, acepta el consentimiento y envía una sola vez.
-4. Espera el mensaje de éxito y el código del registro. Si falla, revisa el mensaje y conserva los datos para reintentar.
-5. Comprueba el documento en Firestore → Datos → `solicitudes`.
-6. Abre http://localhost:8000/docs/registros.html e ingresa con tu cuenta autorizada.
-7. Busca, filtra y pulsa Exportar CSV. Si Excel no separa las columnas, usa Datos → Desde texto/CSV y selecciona UTF-8 y coma.
-8. En Google Sheets, usa Archivo → Importar → Subir y selecciona el CSV.
-9. Cierra sesión al terminar.
+`TURNSTILE_HOSTNAMES` es un parámetro no secreto de la función, con valor inicial
+`leninasto.github.io,localhost,127.0.0.1`. Para añadir un dominio, actualiza ese
+parámetro, la lista `cors` de `functions/index.js`, los dominios autorizados de
+Authentication y los dominios del widget. Vuelve a desplegar después.
 
-## Errores frecuentes
+Si configuraste el cumplimiento obligatorio de Firebase App Check siguiendo la
+versión anterior de este proyecto, desactívalo para **Cloud Firestore**: el panel
+actual usa Google y reglas de lectura; el formulario usa Turnstile en la función.
+El despliegue de esta versión no modifica ese ajuste de la consola.
 
-| Mensaje o síntoma | Qué revisar |
-| --- | --- |
-| Acceso anónimo no habilitado | Authentication → Método de acceso → Anónimo. |
-| Firebase rechazó el envío | Reglas publicadas en la base `(default)`, campos y valores válidos. |
-| No se pudo iniciar sesión | Cuenta creada, contraseña correcta y proveedor Correo/contraseña habilitado. |
-| Cuenta sin permiso | Documento `admins/UID` con el UID exacto del usuario. |
-| La página no funciona al abrir el HTML | Usar un servidor HTTP; no abrir con `file://`. |
-| El panel no tiene registros | Revisar filtros y confirmar que se envió a este mismo proyecto Firebase. |
+Publica también `firestore.rules`: las escrituras directas del cliente quedan
+prohibidas para que no se pueda omitir Turnstile. El Admin SDK de la función
+escribe únicamente tras validar sesión, campos, día, horario y verificación.
+No publiques solo el frontend: necesita esta función y estas reglas.
 
-## Configuración y límites
+## 4. Publicar la web y la presentación
 
-El objeto `firebaseConfig` es público por diseño; los permisos los controlan Authentication y las reglas. Nunca agregues una clave privada o un archivo de cuenta de servicio al frontend.
+El workflow `.github/workflows/pages.yml` publica `docs` al subir los cambios a
+`main`. Selecciona GitHub → Settings → Pages → Source → **GitHub Actions**.
+El despliegue de Pages es independiente del despliegue de Firebase anterior.
 
-Las sesiones de acceso se conservan durante la sesión del navegador. El panel carga como máximo los 500 registros más recientes y exporta los resultados filtrados, con fecha de Lima y protección contra fórmulas en campos de texto. No modifica registros ni crea hojas de cálculo automáticamente.
+Para servir la web localmente:
 
-Antes de abrir el formulario al público, configura Firebase App Check, revisa cuotas y alertas de uso y establece una política de privacidad y conservación de datos. La autenticación anónima y las reglas validan acceso y datos, pero no equivalen a un límite de envíos ni impiden por sí solas el spam.
+```sh
+python3 -m http.server 8000
+```
 
-El formulario guarda únicamente en Firebase. Los errores no generan copias locales de los datos personales.
+Abre `/docs/`, `/docs/contacto.html` y `/docs/presentacion.html` en ese servidor.
+Los módulos requieren HTTP. Google, Cloudflare y la función necesitan conexión.
 
-## Referencias oficiales
+## 5. Autorizar un administrador
 
-- [Registrar una aplicación web](https://firebase.google.com/docs/web/setup).
-- [Authentication](https://firebase.google.com/docs/auth/web/start).
-- [Reglas de Cloud Firestore](https://firebase.google.com/docs/firestore/security/get-started).
-- [App Check](https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider).
+1. Entra con Google en contacto para que Firebase cree tu usuario, o crea una
+   cuenta de correo/contraseña en Firebase Authentication.
+2. Copia el UID en Authentication → Usuarios.
+3. Crea manualmente el documento `admins/UID` en Firestore con un campo `nombre`.
+4. Entra en `registros.html` con esa cuenta. Las cuentas sin ese documento no
+   pueden leer las solicitudes; iniciar sesión con Google no concede ese permiso.
+
+El panel consulta hasta 500 solicitudes recientes, busca, filtra y exporta CSV.
+Los datos anteriores con horarios generales siguen siendo legibles.
+
+## 6. Comprobación final en tu proyecto
+
+1. En contacto, accede con Google y completa datos ficticios, programa, día,
+   horario y consentimiento.
+2. Completa el widget y envía una sola vez. Debe aparecer el código de registro.
+3. Comprueba el documento en Firestore → `solicitudes` y en el panel autorizado.
+4. Comprueba que solicitudes sin sesión, sin token o con token inválido no se
+   guardan. Las escrituras directas a Firestore deben rechazarse.
+5. Prueba el cierre de sesión, el cambio de tema, la expiración del widget y la
+   exportación CSV. Nunca publiques tokens de depuración ni secretos.
+
+Los 35 tests locales comprueban la validación y el flujo del servidor usando
+respuestas de Cloudflare y almacenamiento simulados. No sustituyen esta prueba
+contra tu Firebase y tu widget desplegados.
+
+## Horarios y límites
+
+Se ofrecen franjas de 90 minutos: lunes a viernes 09:00–10:30, 11:00–12:30,
+15:00–16:30 y 17:00–18:30; sábados las dos franjas de mañana; domingos sin atención.
+Son preferencias sujetas a confirmación, no reservas ni disponibilidad en tiempo
+real. Mantén `docs/js/horarios.js` y `functions/registration.js` coordinados al
+modificarlas.
+
+Turnstile y Google reducen envíos automatizados, pero no garantizan eliminar el
+spam ni reemplazan cuotas, alertas y seguimiento de abuso. Define también la
+política de privacidad y conservación de datos de la academia.
+
+## Referencias
+
+- [Turnstile en el cliente](https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/)
+- [Verificación obligatoria en el servidor](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
+- [Secretos de Firebase Functions](https://firebase.google.com/docs/functions/config-env#secret_parameters)
+- [Acceso con Google](https://firebase.google.com/docs/auth/web/google-signin)

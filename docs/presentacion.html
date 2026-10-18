@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../docs/css/reproductor.css" />
+    <link rel="stylesheet" href="css/reproductor.css" />
     <style>
       :root {
         --primary: #9b452d;
@@ -468,7 +468,13 @@
           animation: none;
         }
       }
+      .wireframe { border: 2px dashed var(--line); box-shadow: none; }
+      .wire-row { display: flex; justify-content: space-between; gap: 1rem; padding: .6rem; border: 1px solid var(--line); font-size: .85rem; }
+      .wire-block { margin: .7rem 0; padding: .8rem; border: 1px dashed var(--line); color: var(--soft); font-size: .95rem; }
+      .wire-columns { display: grid; grid-template-columns: 2fr 1fr; gap: .8rem; }
     </style>
+    <link rel="stylesheet" href="css/tema.css" />
+    <script src="js/tema.js"></script>
   </head>
   <body class="presentation-page">
     <main class="presentation" aria-label="Presentación Harmony Heights">
@@ -476,6 +482,7 @@
         <div class="brand">
           <span class="brand-mark">HH</span><span>Harmony Heights</span>
         </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">☾ Tema oscuro</button>
         <span class="top-meta">Proyecto final · Frontend Developer Web</span>
       </header>
       <div class="slides" aria-live="polite">
@@ -565,6 +572,46 @@
                 </ol>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section class="slide" aria-labelledby="ideaTitle">
+          <div class="slide-inner">
+            <span class="step">Del concepto a la web · 1 / 3</span>
+            <h2 id="ideaTitle">La idea: acercar el arte a cada estudiante.</h2>
+            <p class="lead">Una persona quiere aprender música o danza, pero necesita orientación sobre el programa y sus horarios antes de inscribirse.</p>
+            <div class="grid-3">
+              <article class="card"><span class="number">01 · Necesidad</span><h3>Descubrir</h3><p>Mostrar disciplinas, niveles y una identidad de academia artística cercana y confiable.</p></article>
+              <article class="card tonal"><span class="number">02 · Recorrido</span><h3>Elegir</h3><p>Inicio → programas → contacto. Un llamado a la acción visible acompaña la navegación.</p></article>
+              <article class="card green"><span class="number">03 · Resultado</span><h3>Conectar</h3><p>Elegir día y franja, acceder con Google y solicitar orientación. La academia confirma la disponibilidad.</p></article>
+            </div>
+          </div>
+        </section>
+        <section class="slide" aria-labelledby="wireframeTitle">
+          <div class="slide-inner">
+            <span class="step">Del concepto a la web · 2 / 3</span>
+            <h2 id="wireframeTitle">Maquetación: ordenar antes de decorar.</h2>
+            <div class="grid-2">
+              <div class="card wireframe" aria-label="Esquema de la página de contacto">
+                <div class="wire-row">HH · Navegación <span>Claro / oscuro</span></div>
+                <div class="wire-block"><strong>Título y propuesta</strong><br>Una explicación breve de la solicitud</div>
+                <div class="wire-columns"><div class="wire-block">Cuenta Google<br><br>Datos personales<br><br>Programa<br><br>Día → Horario<br><br>Consentimiento<br><br>[ Enviar solicitud ]</div><div class="wire-block">Información<br>de contacto<br><br>Ubicación<br><br>Mapa</div></div>
+                <div class="wire-row">Pie · enlaces y presentación</div>
+              </div>
+              <div><h3>Jerarquía y estructura</h3><p>La cabecera orienta, el título explica y el formulario concentra la acción principal. La información complementaria ocupa una columna lateral.</p><h3>Adaptación a móvil</h3><p>Las columnas se apilan, los controles mantienen sus etiquetas y el menú se contrae para conservar espacio.</p><p class="demo-note">Esquema explicativo de la estructura implementada; no es una captura de un boceto histórico.</p></div>
+            </div>
+          </div>
+        </section>
+        <section class="slide" aria-labelledby="implementationTitle">
+          <div class="slide-inner">
+            <span class="step">Del concepto a la web · 3 / 3</span>
+            <h2 id="implementationTitle">Del esquema a una interfaz funcional.</h2>
+            <div class="grid-3">
+              <article class="card"><h3>Estructura → HTML</h3><p>Cabecera, secciones, formulario semántico, etiquetas visibles y columnas de Bootstrap.</p><p><code>contacto.html</code></p></article>
+              <article class="card tonal"><h3>Identidad → CSS</h3><p>Tipografía editorial, coral, dorado y azul profundo. Tarjetas, espacios y dos temas con preferencia persistente.</p><p><code>styles.css + tema.css</code></p></article>
+              <article class="card green"><h3>Interacción → JavaScript</h3><p>Horarios dependientes del día, Google Authentication, Turnstile validado en el servidor y persistencia en Firestore.</p><p><code>horarios.js + firebase.js</code></p></article>
+            </div>
+            <p class="lead">La integración queda preparada en código; Google y la función de verificación requieren configuración y despliegue en Firebase para funcionar en producción.</p>
           </div>
         </section>
 
@@ -713,15 +760,14 @@
                 <div class="flow">
                   <span class="flow-item">Validar</span
                   ><span class="arrow">→</span
-                  ><span class="flow-item">Auth</span
+                  ><span class="flow-item">Google + Turnstile</span
                   ><span class="arrow">→</span
                   ><span class="flow-item">Reglas</span
                   ><span class="arrow">→</span
                   ><span class="flow-item">Firestore</span>
                 </div>
                 <p>
-                  Las reglas validan los datos y los permisos antes de
-                  guardarlos.
+                  La función verifica Google, el token de Cloudflare, el dominio y los datos antes de guardar. Las reglas bloquean escrituras directas.
                 </p>
               </div>
               <div class="card tonal">
@@ -844,7 +890,7 @@
                 >
                 <button id="reloadDemo" type="button">Recargar</button>
                 <a
-                  href="https://leninasto.github.io/HarmonyHeights/"
+                  href="index.html"
                   target="_blank"
                   rel="noopener noreferrer"
                   >Abrir en otra pestaña ↗</a
@@ -853,14 +899,14 @@
               <iframe
                 id="liveSite"
                 title="Demostración interactiva de Harmony Heights"
-                data-src="https://leninasto.github.io/HarmonyHeights/?presentacion=1"
+                data-src="index.html?presentacion=1"
                 allow="fullscreen"
                 referrerpolicy="strict-origin-when-cross-origin"
               ></iframe>
             </div>
             <p class="demo-note">
               Puedes navegar y probar el sitio dentro de esta diapositiva.
-              Requiere conexión a internet; si no carga, usa el enlace para
+              Los recursos externos requieren internet; si no carga, usa el enlace para
               abrirlo en otra pestaña.
             </p>
           </div>
@@ -898,7 +944,7 @@
       <nav class="navigation" aria-label="Controles de la presentación">
         <span class="key-hint">Usa ← → o Espacio</span>
         <div class="progress-wrap">
-          <span class="progress-text" id="counter">1 / 12</span>
+          <span class="progress-text" id="counter">1 / 15</span>
           <div class="progress-track" aria-hidden="true">
             <div class="progress-bar" id="progress"></div>
           </div>
@@ -992,7 +1038,7 @@
       </div>
     </aside>
     <audio id="ambientAudio" preload="metadata"></audio>
-    <script src="../docs/js/reproductor.js"></script>
+    <script src="js/reproductor.js"></script>
     <script>
       "use strict";
       const slides = [...document.querySelectorAll(".slide")],
