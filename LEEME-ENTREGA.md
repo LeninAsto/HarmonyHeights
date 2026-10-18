@@ -18,6 +18,8 @@ La clave pública del widget ya está incluida. La clave secreta no se incluye e
 el código ni en el ZIP. Las credenciales y la configuración de tu cuenta se
 hacen por separado; esta entrega no despliega ni publica por sí sola.
 
+Consulta también [el esquema de datos de Firestore](docs/DATOS_FIRESTORE.md) para ver qué se guarda y cómo comprobar la primera solicitud.
+
 ## Probar visualmente
 
 Desde la raíz del proyecto:

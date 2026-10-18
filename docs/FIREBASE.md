@@ -5,6 +5,8 @@ El formulario necesita una sesión de Google y una verificación Turnstile váli
 Los registros se crean en una Cloud Function; el navegador solo puede leer el
 panel cuando su usuario figura en `admins`.
 
+Para ver los nombres y tipos de cada campo, consulta [Datos del formulario en Firestore](DATOS_FIRESTORE.md). La colección se crea automáticamente con el primer envío válido.
+
 ## 1. Configurar Firebase
 
 1. En Firebase Console, abre el proyecto `harmony-heights-41e77`.
