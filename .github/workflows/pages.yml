@@ -1,0 +1,51 @@
+name: Publicar Harmony Heights
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar sitio estático
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='backend/' docs/ _site/
+          touch _site/.nojekyll
+          test -f _site/index.html
+          test -f _site/js/firebase-config.js
+          test ! -d _site/backend
+
+      - name: Subir sitio preparado
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

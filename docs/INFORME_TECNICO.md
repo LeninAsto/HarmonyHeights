@@ -1,196 +1,83 @@
-# Informe técnico — Harmony Heights
+﻿# Informe técnico — Harmony Heights
 
-## 1. Datos generales
+## 1. Propuesta y requisitos
 
-- **Proyecto:** Harmony Heights
-- **Tipo:** Sitio web institucional responsive de varias páginas
-- **Sector:** Educación artística
-- **Dominio propuesto:** `harmonyheights.edu.pe`
-- **Objetivo:** Presentar servicios académicos y captar solicitudes de orientación de forma clara, ordenada y profesional.
+Harmony Heights es una academia ficticia de música y artes escénicas. El sitio resuelve la presentación dispersa de programas y el registro manual de interesados mediante seis páginas públicas: Inicio, Nosotros, Programas, Música, Danza y Contacto. El dominio propuesto es `harmonyheights.edu.pe`.
 
-> Harmony Heights es una institución ficticia desarrollada con fines académicos. Los programas, horarios y datos de contacto mostrados son demostrativos.
+Los PDF del trabajo final solicitan navegación responsive, HTML semántico, CSS interno y externo, Flexbox/Grid, Bootstrap, manipulación del DOM, formulario validado, explicación de GET/POST, informe y exposición. El panel privado de registros amplía esa base sin sustituir las seis páginas.
 
-## 2. Problema y solución
+## 2. Tecnologías y organización
 
-Una institución con información dispersa y registro manual puede perder interesados y proyectar una imagen poco profesional. La propuesta centraliza la oferta académica, facilita la navegación desde celular o computadora y crea un flujo de registro con validaciones.
+| Tecnología | Aplicación |
+| --- | --- |
+| HTML5 | Header, nav, main, section, article, aside y footer; etiquetas y campos asociados. |
+| CSS3 | Colores, tipografía, espaciado, estados, transiciones y media queries. |
+| Flexbox | Navegación, botones, filtros, pie y herramientas del panel. |
+| Grid | Metodología, pasos y distribución del formulario/contacto. |
+| Bootstrap 5.3 | Menú responsive, grillas, tarjetas, formulario, tabla y acordeón. |
+| JavaScript | Eventos, condicionales, funciones, filtros y actualización del DOM. |
+| Firebase Authentication | Sesiones anónimas para enviar y correo/contraseña para administrar. |
+| Cloud Firestore | Persistencia de solicitudes y control de acceso mediante reglas. |
+| PHP | Alternativa de POST con validación del lado servidor. |
+| OpenStreetMap | Mapa referencial de Lima. |
 
-La solución incluye seis páginas:
+La hoja externa `css/styles.css` reúne los estilos compartidos. Inicio conserva una regla interna para `.home-highlight`, cumpliendo el requisito de ambos tipos de CSS.
 
-1. **Inicio:** propuesta principal, programas destacados, metodología y llamada a la acción.
-2. **Nosotros:** propósito, enfoque y valores institucionales.
-3. **Programas:** catálogo general con filtros dinámicos.
-4. **Música:** categoría con programas, metodología y horarios referenciales.
-5. **Danza:** categoría con programas y preguntas frecuentes.
-6. **Contacto:** formulario de orientación conectado a un backend básico.
+Los scripts se dividen por responsabilidad: `script.js` contiene interacciones generales; `accesibilidad.js`, preferencias y audio; `formulario.js`, validación y envío; `firebase.js`, conexión; `firebase-config.js`, configuración; y `registros.js`, acceso y tabla. Los nombres y funciones sustituyen los comentarios del código. El panel de accesibilidad está escrito en HTML y el audio utiliza un reproductor, evitando crear interfaces o sintetizar sonido desde JavaScript.
 
 ## 3. Arquitectura
 
 ```mermaid
 flowchart LR
-    U[Usuario] --> P[Páginas HTML5]
-    P --> C[CSS3 + Bootstrap]
-    P --> J[JavaScript]
-    J --> V[Validación y DOM]
-    J -->|POST JSON| B[registro.php]
-    B --> S[(solicitudes.jsonl)]
-    J -->|Sin PHP| L[(localStorage de demostración)]
+    V[Visitante] --> H[Seis páginas HTML]
+    H --> J[Formulario validado]
+    J --> A[Authentication anónimo]
+    A --> R[Reglas de Firestore]
+    R --> D[(Solicitudes)]
+    U[Administrador] --> L[Acceso con correo]
+    L --> P[Verificación admins/UID]
+    P --> T[Tabla privada]
+    D --> T
+    T --> C[Exportación CSV]
+    C --> E[Excel o Google Sheets]
 ```
 
-### Organización de archivos
+La configuración pública no concede permiso para leer los datos. Las reglas de `firestore.rules` validan cada documento y limitan su lectura a usuarios con un documento `admins/UID`. Los clientes no pueden crear esos permisos, modificar registros ni eliminarlos. Los permisos administrativos se crean desde la consola del propietario.
 
-```text
-docs/
-├── index.html
-├── nosotros.html
-├── programas.html
-├── musica.html
-├── danza.html
-├── contacto.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── script.js
-├── backend/
-│   ├── registro.php
-│   ├── README.md
-│   └── data/
-│       ├── .gitignore
-│       └── .htaccess
-├── INFORME_TECNICO.md
-└── GUIA_EXPOSICION.md
-```
+## 4. UX/UI y accesibilidad
 
-## 4. Tecnologías empleadas
+La paleta conserva azul, papel, coral y verde, con coral más oscuro para que los botones sean legibles. Las secciones alternan superficies claras, verdes y oscuras. Las tarjetas tienen fondo opaco; los campos y controles cuentan con bordes más definidos.
 
-| Tecnología | Aplicación en el proyecto |
-|---|---|
-| HTML5 | Estructura semántica con `header`, `nav`, `main`, `section`, `article`, `aside` y `footer`. |
-| CSS3 | Paleta, tipografía, espaciado, estados, animaciones y adaptación responsive. |
-| Flexbox | Navegación, grupos de botones, filtros, pies de página y alineaciones. |
-| CSS Grid | Metodología, pasos y bloques de características. |
-| Bootstrap 5.3 | Menú colapsable, grilla responsive, botones, formulario, tabla y acordeón. |
-| JavaScript | Filtros, navegación activa, animaciones, año automático, DOM y envío asíncrono. |
-| PHP | Endpoint `POST`, validación del lado servidor y persistencia mínima. |
-| JSON Lines | Un objeto JSON por solicitud, fácil de revisar en una demostración. |
-| OpenStreetMap | Mapa referencial embebido sin necesidad de una clave privada. |
-| Web Audio API | Generación de una melodía ambiental opcional sin archivo con copyright. |
+El modo de alto contraste cubre navegación, hero, tarjetas, etiquetas, tablas, acordeones, campos, estados, pie y herramientas. Se ofrecen tamaño de texto, fuente legible, escala de grises, enlaces destacados y reducción de movimiento. El audio es opcional y no comienza automáticamente.
 
-### CSS interno y externo
+Se incluyen enlace para saltar al contenido, foco visible, textos alternativos, mensajes con aria-live y controles identificados. El contenido permanece visible sin JavaScript. Las preferencias de movimiento del sistema se respetan y las animaciones principales son transiciones CSS sencillas.
 
-La hoja externa `css/styles.css` concentra el sistema visual reutilizado por todas las páginas. En `index.html` se incluye una regla interna pequeña para `.home-highlight`, como demostración académica de CSS interno. Se limita a un detalle único para evitar duplicación y conservar la mantenibilidad.
+## 5. Formulario y almacenamiento
 
-## 5. UX/UI y accesibilidad
+Se solicitan nombre, correo, teléfono, edad, programa, horario, objetivo opcional y consentimiento. HTML valida obligatoriedad, longitudes, tipos, patrón y rangos. JavaScript elimina espacios al inicio y al final y envía solo los campos previstos. Las reglas de Firestore repiten la validación de datos y exigen que el UID coincida con el usuario y la fecha provenga del servidor.
 
-- Menú consistente y responsive en todas las páginas.
-- Jerarquía visual con títulos, subtítulos, espacios y contrastes claros.
-- Botones CTA visibles hacia programas y contacto.
-- Enlace “Saltar al contenido” para navegación por teclado.
-- Textos alternativos en imágenes y etiquetas conectadas a cada campo.
-- Mensajes del formulario anunciados mediante `aria-live`.
-- Compatibilidad con `prefers-reduced-motion` para reducir animaciones.
-- Panel de accesibilidad con aumento de texto, alto contraste, escala de grises, fuente legible, enlaces resaltados y reducción de movimiento.
-- Preferencias persistentes mediante `localStorage` y controles con estados `aria-pressed`.
-- Botón flotante “Volver arriba” disponible después de desplazarse.
-- Diseño adaptable mediante `clamp()`, Bootstrap y *media queries*.
-- El contenido demostrativo se identifica como tal y no inventa cifras o testimonios.
+El botón se desactiva durante el envío. Solo una respuesta confirmada produce el mensaje de éxito y limpia los campos. Si falla, conserva los datos y explica el problema. No hay respaldo de datos personales en localStorage ni cambio automático de proveedor.
 
-## 6. Interactividad con JavaScript
+GET se demuestra al navegar a `contacto.html?programa=musica`: lleva una preferencia no sensible. El SDK de Firestore gestiona sus solicitudes de red para el guardado. Para mostrar explícitamente POST JSON, se conserva `backend/registro.php`, activable con `storageMode = "php"`. Este backend es independiente de Firebase y el panel no consulta sus archivos.
 
-El archivo externo `js/script.js` utiliza:
+## 6. Administración y hojas de cálculo
 
-- Variables y constantes (`const`, `let`).
-- Funciones separadas por responsabilidad.
-- Condicionales y operadores.
-- Eventos `DOMContentLoaded`, `click` y `submit`.
-- Manipulación del DOM mediante clases, atributos, texto y la propiedad `hidden`.
-- `IntersectionObserver` para revelar elementos al entrar en pantalla.
-- `URLSearchParams` para seleccionar un programa desde la URL.
-- `fetch()` con `async/await` para enviar el formulario mediante `POST`.
-- `localStorage` como respaldo explícitamente demostrativo cuando PHP no está activo.
-- Creación compartida del panel de accesibilidad, el botón de retorno y el control de ambiente.
-- Web Audio API para generar notas suaves sin reproducir contenido automáticamente.
+`registros.html` utiliza correo y contraseña y verifica el permiso del UID. Carga las 500 solicitudes más recientes, permite búsqueda por nombre/correo y filtro por programa y exporta las filas visibles con todos sus campos a CSV UTF-8. La fecha se muestra en la zona America/Lima. El CSV neutraliza textos que podrían ejecutarse como fórmulas en una hoja de cálculo.
 
-## 7. Formulario y backend
+La exportación permite trabajar en Excel y Google Sheets mediante importación. No existe sincronización automática con Google Sheets. Los registros se insertan en la tabla mediante textContent para que el contenido recibido no se interprete como HTML.
 
-### Datos solicitados
+## 7. Respuestas a las preguntas guía
 
-Nombre, correo, teléfono, edad, programa, horario, objetivo opcional y consentimiento. Son suficientes para orientar al interesado sin pedir información innecesaria.
+1. **Estructura institucional:** seis páginas, menú consistente y recorrido de descubrir programas a solicitar orientación.
+2. **Diseño y maquetación:** tipografía jerárquica, espacios, paleta coherente, tarjetas, CTA y distribución adaptable con Grid, Flexbox y Bootstrap.
+3. **JavaScript útil:** filtros, selección de programa, accesibilidad, validación y consulta de solicitudes con funciones de responsabilidad concreta.
+4. **Datos y validación:** información mínima de contacto y preferencias; validación en navegador y reglas del servicio antes de guardar.
+5. **Integración coherente:** HTML estructura, CSS presenta, Bootstrap ayuda con componentes y JavaScript conecta la interacción con la persistencia.
 
-### Validación
+## 8. Activación y límites
 
-El navegador valida obligatoriedad, tipo, longitud, patrón y rangos. El servidor repite la validación porque cualquier persona puede omitir o alterar el JavaScript.
+Consulta `FIREBASE.md`. El propietario debe crear Firestore, habilitar Authentication, publicar las reglas y autorizar su UID. La configuración está incorporada, pero no demuestra por sí sola que esos servicios estén activos.
 
-### GET y POST
+Antes de uso público se deben configurar App Check, cuotas, alertas, privacidad y conservación de datos. Las reglas y sesiones anónimas no sustituyen una protección contra spam. El servidor PHP de desarrollo se utiliza solo con datos ficticios y no aplica las restricciones de Apache.
 
-- **GET** se usa implícitamente para solicitar páginas y para llevar una preferencia no sensible en la URL, por ejemplo `contacto.html?programa=musica`.
-- **POST** se usa para enviar el formulario, porque los datos viajan en el cuerpo de la solicitud y no quedan expuestos en la URL.
-
-El backend crea `backend/data/solicitudes.jsonl`. En un producto real, se reemplazaría por una base de datos y se agregarían HTTPS, CSRF, autenticación administrativa, rate limiting y política de privacidad.
-
-## 8. Flujo del usuario
-
-```mermaid
-flowchart TD
-    A[Visita Inicio] --> B{¿Conoce el área?}
-    B -->|Sí| C[Música o Danza]
-    B -->|No| D[Catálogo de programas]
-    C --> E[Formulario]
-    D --> E
-    E --> F{Validación correcta}
-    F -->|No| G[Mensaje junto al formulario]
-    G --> E
-    F -->|Sí| H[POST al backend]
-    H --> I[Confirmación]
-```
-
-## 9. Respuestas a las preguntas guía
-
-### 1. ¿Cómo estructurar la página?
-
-Con navegación constante, inicio que resume la propuesta, páginas específicas para institución y categorías, catálogo general y contacto. Las etiquetas semánticas describen cada bloque y mejoran accesibilidad y mantenimiento.
-
-### 2. ¿Qué diseño mejora la usabilidad?
-
-Una paleta limitada, contraste suficiente, tipografía legible, espacios amplios, tarjetas con información comparable y botones consistentes. Grid y Flexbox mantienen el orden, mientras Bootstrap adapta la estructura a diferentes pantallas.
-
-### 3. ¿Cómo aporta JavaScript sin afectar la claridad?
-
-Solo en tareas útiles: filtrar programas, señalar la página actual, mostrar estados del formulario, preseleccionar intereses y aplicar animaciones discretas. Si JavaScript falla, el contenido principal sigue disponible.
-
-### 4. ¿Qué debe pedir y cómo validarlo?
-
-Solo datos necesarios para la orientación. Cada campo se valida primero en HTML/JavaScript para una respuesta rápida y nuevamente en PHP para mantener la integridad de la información.
-
-### 5. ¿Cómo se demuestra la integración?
-
-La semántica está en los seis HTML; el sistema visual y responsive en CSS; los componentes y grillas en Bootstrap; los eventos y DOM en JavaScript; la captación en el formulario; y el procesamiento real en PHP.
-
-## 10. Ejecución y publicación
-
-### Vista estática
-
-Abrir `index.html` o publicar la carpeta `docs` con GitHub Pages. En esta modalidad el sitio funciona, pero el formulario entra en modo demostración porque GitHub Pages no ejecuta PHP.
-
-### Vista completa con backend
-
-Con PHP 8 instalado, ejecutar dentro de `docs`:
-
-```bash
-php -S localhost:8000
-```
-
-Abrir `http://localhost:8000`. Para producción con backend se requiere un hosting compatible con PHP.
-
-## 11. Conclusión
-
-La propuesta resuelve el caso mediante una arquitectura pequeña y comprensible. Separa contenido, presentación, comportamiento y procesamiento; cumple los recursos técnicos solicitados; y deja una ruta clara para evolucionar hacia una base de datos sin complicar la entrega académica actual.
-
-## 12. Evidencias de maquetación
-
-### Inicio en escritorio
-
-![Captura de la página de inicio en escritorio](evidencias/inicio-escritorio.png)
-
-### Contacto en ancho reducido
-
-![Captura de la página de contacto en ancho reducido](evidencias/contacto-movil.png)
+La publicación, los nombres de los integrantes y las diapositivas finales deben completarse según la entrega académica. No se afirma un despliegue nuevo como parte de esta revisión local.

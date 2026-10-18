@@ -27,7 +27,6 @@ if (str_contains($contentType, 'application/json')) {
     $data = $_POST;
 }
 
-// Campo trampa: los bots suelen llenarlo, una persona no lo ve.
 if (!empty($data['website'])) {
     respond(200, true, 'Solicitud recibida.');
 }

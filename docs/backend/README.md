@@ -1,25 +1,11 @@
-# Backend mínimo
+﻿# Backend PHP alternativo
 
-`registro.php` recibe el formulario mediante `POST`, vuelve a validar los datos y guarda cada solicitud como una línea JSON en `data/solicitudes.jsonl`.
+El modo principal utiliza Firebase. Este endpoint se conserva para demostrar un envío POST y validación en el servidor.
 
-## Probar localmente
+Cambia `storageMode` a `"php"` en `../js/firebase-config.js`, instala PHP 8 con mbstring y ejecuta `php -S localhost:8000` desde docs.
 
-Requiere PHP 8 o superior. Desde la carpeta `docs`:
+El servidor valida los campos y guarda cada solicitud como una línea JSON en `data/solicitudes.jsonl`. No guarda copias en el navegador.
 
-```bash
-php -S localhost:8000
-```
+El panel `registros.html` consulta exclusivamente Firebase; no lee los archivos de PHP.
 
-Luego abre `http://localhost:8000/contacto.html`. El archivo JSON se crea al recibir el primer registro.
-
-Si se abre el sitio sin PHP (por ejemplo, GitHub Pages), JavaScript activa un modo de demostración y guarda un máximo de diez registros en `localStorage`, solo dentro del navegador. Ese modo no equivale a un envío real.
-
-## Seguridad básica aplicada
-
-- Solo se acepta el método `POST`.
-- Se validan tipo, longitud y valores permitidos en el servidor.
-- Hay un campo invisible tipo *honeypot* para bots simples.
-- Se usa `LOCK_EX` para evitar escrituras simultáneas incompletas.
-- `.htaccess` bloquea el acceso web al directorio de datos en Apache.
-
-Para producción se debe usar una base de datos, HTTPS, protección CSRF, límite de solicitudes y una política de privacidad real.
+El archivo `.htaccess` restringe la carpeta de datos en Apache. El servidor de desarrollo PHP no aplica ese archivo: úsalo localmente con datos ficticios. Este almacenamiento no está preparado como backend de producción.
