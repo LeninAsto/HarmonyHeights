@@ -13,6 +13,9 @@ html.dialog-open, html.dialog-open body { overflow: hidden; }
   box-shadow: 0 24px 100px #0006;
   overflow: hidden;
 }
+.program-dialog[open] { display: flex; flex-direction: column; }
+.program-dialog .dialog-header, .sheet-handle { flex-shrink: 0; }
+.program-dialog .dialog-scroll { min-height: 0; flex: 1 1 auto; }
 .hh-dialog::backdrop { background: #071222b8; backdrop-filter: blur(6px); }
 .hh-dialog[open] { animation: dialog-appear .22s ease-out; }
 .dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--line); }
