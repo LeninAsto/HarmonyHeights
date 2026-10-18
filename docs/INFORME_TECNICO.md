@@ -45,7 +45,7 @@ GET se utiliza para obtener páginas y llevar preferencias como `?programa=music
 
 La paleta combina azul, papel, coral oscuro y verde. El alto contraste cubre navegación, tarjetas, tablas, acordeón, formulario, pie y reproductor. Se incluyen foco visible, salto al contenido, textos alternativos y controles etiquetados.
 
-Las cuatro pistas MP3 se reproducen desde un panel flotante con título y artista o autor de la obra, pausa, pista anterior/siguiente y volumen inicial del 12 %. Si el navegador bloquea el inicio automático, se espera una interacción. La sesión conserva pista, posición, volumen, pausa y minimización. La presentación comparte el reproductor y su web incrustada no inicia otra pista.
+Las cuatro pistas MP3 se reproducen desde un panel flotante con título y artista o autor de la obra, pausa, pista anterior/siguiente y volumen inicial del 12 %. Si el navegador bloquea el inicio automático, se espera una interacción. La sesión conserva pista, posición, volumen y pausa. La presentación comparte el reproductor y su web incrustada no inicia otra pista.
 
 La diapositiva de demostración carga la web pública al visitarla. Ofrece recarga y apertura en otra pestaña. Los atajos de diapositivas respetan botones y campos, por lo que no interfieren con el control de volumen.
 

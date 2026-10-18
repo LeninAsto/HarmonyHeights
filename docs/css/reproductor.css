@@ -108,17 +108,28 @@
   outline: 3px solid #96321f;
   outline-offset: 3px;
 }
-.music-player.is-collapsed {
-  padding: 0.7rem;
-}
-.is-collapsed .music-track {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.presentation-music-button {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5.5rem;
+  z-index: 31;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  background: #10233f;
+  color: #ffffff;
+  font:
+    700 1.2rem system-ui,
+    sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px #10233f26;
 }
 .presentation-page .music-player {
   right: 1.5rem;
-  bottom: 5.5rem;
+  bottom: 9.25rem;
   left: auto;
   z-index: 30;
 }
@@ -145,9 +156,11 @@ html.a11y-contrast .music-player :focus-visible {
 }
 @media (max-width: 575.98px) {
   .music-player {
-    bottom: 0.75rem;
+    bottom: 16.5rem;
     left: 0.75rem;
-    width: calc(100vw - 5.5rem);
+    width: calc(100vw - 1.5rem);
+    max-height: calc(100dvh - 18rem);
+    overflow-y: auto;
     padding: 0.8rem;
   }
   .music-disc {
@@ -162,9 +175,13 @@ html.a11y-contrast .music-player :focus-visible {
   .presentation-page .music-player {
     right: 0.75rem;
   }
+  .presentation-music-button {
+    right: 0.75rem;
+  }
 }
 @media print {
-  .music-player {
+  .music-player,
+  .presentation-music-button {
     display: none;
   }
 }

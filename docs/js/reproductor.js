@@ -44,7 +44,6 @@ function initializeMusicPlayer() {
   const volumeValue = document.querySelector("#musicVolumeValue");
   const status = document.querySelector("#musicStatus");
   const title = document.querySelector("#musicTrack");
-  const body = document.querySelector("#musicBody");
   const state = loadState();
   let waitingForInteraction = false;
   let pendingSeek = state.time;
@@ -54,7 +53,7 @@ function initializeMusicPlayer() {
   audio.volume = state.volume / 100;
   volume.value = state.volume;
   volumeValue.textContent = state.volume + "%";
-  setCollapsed(state.collapsed);
+  setPlayerOpen(false);
   selectTrack(state.track);
   if (state.playing) playMusic();
   else setStatus("En pausa", false);
@@ -68,9 +67,18 @@ function initializeMusicPlayer() {
   });
   next.addEventListener("click", () => changeTrack(1));
   previous.addEventListener("click", () => changeTrack(-1));
-  collapse.addEventListener("click", () => setCollapsed(!state.collapsed));
+  collapse.addEventListener("click", () => {
+    setPlayerOpen(false);
+    if (launcher) launcher.focus();
+  });
   if (launcher)
-    launcher.addEventListener("click", () => setCollapsed(!state.collapsed));
+    launcher.addEventListener("click", () => setPlayerOpen(player.hidden));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !player.hidden) {
+      setPlayerOpen(false);
+      if (launcher) launcher.focus();
+    }
+  });
 
   volume.addEventListener("input", () => {
     state.volume = Number(volume.value);
@@ -179,18 +187,9 @@ function initializeMusicPlayer() {
     player.classList.toggle("is-playing", playing);
   }
 
-  function setCollapsed(collapsed) {
-    state.collapsed = collapsed;
-    player.classList.toggle("is-collapsed", collapsed);
-    body.hidden = collapsed;
-    collapse.textContent = collapsed ? "+" : "−";
-    collapse.setAttribute("aria-expanded", String(!collapsed));
-    collapse.setAttribute(
-      "aria-label",
-      collapsed ? "Expandir reproductor" : "Minimizar reproductor",
-    );
-    if (launcher) launcher.setAttribute("aria-expanded", String(!collapsed));
-    saveState();
+  function setPlayerOpen(open) {
+    player.hidden = !open;
+    if (launcher) launcher.setAttribute("aria-expanded", String(open));
   }
 
   function loadState() {
@@ -199,7 +198,6 @@ function initializeMusicPlayer() {
       volume: 12,
       time: 0,
       playing: true,
-      collapsed: false,
     };
     try {
       const saved = JSON.parse(sessionStorage.getItem("harmonyMusic") || "{}");
@@ -214,8 +212,6 @@ function initializeMusicPlayer() {
       if (Number.isFinite(saved.time) && saved.time >= 0)
         defaults.time = saved.time;
       if (typeof saved.playing === "boolean") defaults.playing = saved.playing;
-      if (typeof saved.collapsed === "boolean")
-        defaults.collapsed = saved.collapsed;
     } catch (error) {
       player.dataset.storage = "unavailable";
     }

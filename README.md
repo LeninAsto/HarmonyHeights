@@ -34,7 +34,7 @@ El formulario utiliza Firebase exclusivamente. El panel `registros.html` permite
 
 ## Música
 
-Las cuatro pistas de `docs/audio` se comparten entre la web y la presentación. El reproductor intenta iniciar al 12 %; si el navegador bloquea el audio automático, espera la primera interacción o el botón Reproducir. Permite pausar, cambiar de pista, ajustar el volumen y minimizarse. Conserva los ajustes y la posición durante la sesión; al navegar reanuda cuando el navegador lo permite. La web incrustada no inicia un segundo reproductor.
+Las cuatro pistas de `docs/audio` se comparten entre la web y la presentación. El reproductor intenta iniciar al 12 %; si el navegador bloquea el audio automático, espera la primera interacción o el botón Reproducir. Permite pausar, cambiar de pista, ajustar el volumen y abrirse desde el botón de música. Conserva los ajustes y la posición durante la sesión; al navegar reanuda cuando el navegador lo permite. La web incrustada no inicia un segundo reproductor.
 
 ## Archivos principales
 
@@ -50,3 +50,5 @@ Las cuatro pistas de `docs/audio` se comparten entre la web y la presentación. 
 | `firestore.rules` | Validación y permisos de datos. |
 
 Los PDF y la presentación original permanecen en `trabajo final`. El [informe técnico](docs/INFORME_TECNICO.md) y las capturas de `docs/evidencias` sirven para la entrega académica.
+
+El reproductor permanece oculto hasta pulsar el botón de música. En móvil, Solicitar información permanece encima de las herramientas flotantes. El enlace a la presentación está al final del pie de página.

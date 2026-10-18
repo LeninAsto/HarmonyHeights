@@ -239,6 +239,25 @@
         width: 100%;
         height: auto;
       }
+      .design-preview {
+        height: clamp(24rem, 52vh, 35rem);
+        margin: 0;
+        align-self: center;
+        border-width: 4px;
+        border-radius: 1.25rem;
+      }
+      .design-slide h2 {
+        font-size: clamp(2.4rem, 4vw, 3.6rem);
+      }
+      .design-slide .lead {
+        font-size: clamp(1.05rem, 1.65vw, 1.3rem);
+      }
+      .design-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      }
       .code {
         padding: 1.1rem 1.25rem;
         overflow-x: auto;
@@ -549,7 +568,7 @@
           </div>
         </section>
 
-        <section class="slide" aria-labelledby="s4">
+        <section class="slide design-slide" aria-labelledby="s4">
           <div class="slide-inner">
             <span class="step">Paso 3 · Diseñar</span>
             <h2 id="s4">Creamos un sistema visual coherente.</h2>
@@ -579,7 +598,7 @@
                   </article>
                 </div>
               </div>
-              <figure class="mockup">
+              <figure class="mockup design-preview">
                 <img
                   src="../docs/evidencias/inicio-escritorio.png"
                   alt="Captura de la página de inicio"
@@ -903,9 +922,20 @@
         </div>
       </nav>
     </main>
+    <button
+      class="presentation-music-button"
+      id="ambientButton"
+      type="button"
+      aria-expanded="false"
+      aria-controls="musicPlayer"
+      aria-label="Abrir o cerrar reproductor de música"
+    >
+      ♪
+    </button>
     <aside
       class="music-player"
       id="musicPlayer"
+      hidden
       aria-label="Reproductor de música de fondo"
     >
       <div class="music-header">
@@ -925,11 +955,9 @@
           class="music-collapse"
           id="musicCollapse"
           type="button"
-          aria-controls="musicBody"
-          aria-expanded="true"
-          aria-label="Minimizar reproductor"
+          aria-label="Cerrar reproductor"
         >
-          −
+          ×
         </button>
       </div>
       <div id="musicBody">
@@ -984,9 +1012,7 @@
         if (slides[current].classList.contains("live-site-slide")) {
           if (!liveSite.getAttribute("src"))
             liveSite.src = liveSite.dataset.src;
-          const musicCollapse = document.querySelector("#musicCollapse");
-          if (musicCollapse.getAttribute("aria-expanded") === "true")
-            musicCollapse.click();
+          document.querySelector("#musicCollapse").click();
         }
         counter.textContent = `${current + 1} / ${slides.length}`;
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;

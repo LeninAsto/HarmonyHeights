@@ -521,6 +521,7 @@ textarea.form-control {
   padding: 1.2rem 1.4rem;
 }
 .utility-tools {
+  align-items: flex-end;
   position: fixed;
   right: 1.25rem;
   bottom: 1.25rem;
@@ -554,6 +555,22 @@ textarea.form-control {
 }
 .back-to-top {
   display: none;
+}
+.mobile-contact-button {
+  display: none;
+  box-shadow: 0 8px 24px #10233f26;
+}
+.presentation-access {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ffffff40;
+  font-size: 0.85rem;
+  text-align: right;
+}
+@media (max-width: 991.98px) {
+  .mobile-contact-button {
+    display: inline-flex;
+  }
 }
 .back-to-top.show {
   display: grid;
