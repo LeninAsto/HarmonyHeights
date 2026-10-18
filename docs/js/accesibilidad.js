@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 const panel = document.querySelector("#accessibilityPanel");
 const accessibilityButton = document.querySelector("#accessibilityButton");
@@ -60,32 +60,6 @@ topButton.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: behavior });
   document.querySelector(".skip-link").focus({ preventScroll: true });
 });
-
-const audio = document.querySelector("#ambientAudio");
-const ambientButton = document.querySelector("#ambientButton");
-audio.volume = 0.3;
-ambientButton.addEventListener("click", async () => {
-  if (!audio.paused) {
-    audio.pause();
-    updateAudioButton(false);
-    return;
-  }
-  try {
-    await audio.play();
-    updateAudioButton(true);
-  } catch (error) {
-    updateAudioButton(false);
-    ambientButton.querySelector(".visually-hidden").textContent =
-      "No se pudo reproducir el audio. Intentar otra vez";
-  }
-});
-audio.addEventListener("error", () => updateAudioButton(false));
-function updateAudioButton(playing) {
-  ambientButton.setAttribute("aria-pressed", String(playing));
-  let label = "Activar música ambiental";
-  if (playing) label = "Detener música ambiental";
-  ambientButton.querySelector(".visually-hidden").textContent = label;
-}
 
 function defaultAccessibilitySettings() {
   return {

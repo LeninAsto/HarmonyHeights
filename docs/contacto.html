@@ -19,12 +19,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/reproductor.css" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header>
       <nav
-        class="navbar navbar-expand-lg site-nav sticky-top"
+        class="navbar navbar-expand-lg site-nav"
         aria-label="Navegación principal"
       >
         <div class="container">
@@ -84,17 +85,18 @@
         <div class="container">
           <div class="contact-layout">
             <div>
-              <div class="form-shell reveal">
+              <div class="form-shell">
                 <h2 class="h1 mb-2">Solicitud de orientación</h2>
                 <p class="mb-4">
                   Los campos con * son obligatorios. Solo usaremos tus datos
                   para atender esta solicitud.
                 </p>
-                <form
-                  id="interestForm"
-                  action="backend/registro.php"
-                  method="post"
-                >
+                <form id="interestForm" method="post">
+                  <noscript
+                    ><p>
+                      Activa JavaScript para enviar tu solicitud.
+                    </p></noscript
+                  >
                   <div class="hp-field" aria-hidden="true">
                     <label for="website">No completar</label
                     ><input
@@ -238,7 +240,11 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary btn-lg" type="submit">
+                      <button
+                        class="btn btn-primary btn-lg"
+                        type="submit"
+                        disabled
+                      >
                         Enviar solicitud
                       </button>
                       <p class="small mt-3 mb-0">
@@ -258,7 +264,7 @@
               </div>
             </div>
             <aside>
-              <div class="contact-card reveal">
+              <div class="contact-card">
                 <span class="eyebrow">Información</span>
                 <h2 class="h1">Hablemos claro.</h2>
                 <p>
@@ -283,7 +289,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="map-card reveal">
+              <div class="map-card">
                 <iframe
                   title="Mapa referencial del centro de Lima"
                   src="https://www.openstreetmap.org/export/embed.html?bbox=-77.0600%2C-12.0800%2C-77.0200%2C-12.0400&amp;layer=mapnik&amp;marker=-12.056%2C-77.042"
@@ -357,10 +363,11 @@
         class="utility-button"
         id="ambientButton"
         type="button"
-        aria-pressed="false"
+        aria-expanded="true"
+        aria-controls="musicBody"
+        aria-label="Expandir o minimizar reproductor de música"
       >
-        <span aria-hidden="true">♪</span
-        ><span class="visually-hidden">Activar música ambiental</span>
+        <span aria-hidden="true">♪</span>
       </button>
       <button class="utility-button back-to-top" id="backToTop" type="button">
         <span aria-hidden="true">↑</span
@@ -431,14 +438,70 @@
         Restablecer preferencias
       </button>
     </aside>
-    <audio
-      id="ambientAudio"
-      src="audio/ambiente.wav"
-      loop
-      preload="none"
-    ></audio>
+    <aside
+      class="music-player"
+      id="musicPlayer"
+      aria-label="Reproductor de música de fondo"
+    >
+      <div class="music-header">
+        <span class="music-disc" aria-hidden="true">♪</span>
+        <div class="music-caption">
+          <p
+            class="music-status"
+            id="musicStatus"
+            role="status"
+            aria-live="polite"
+          >
+            Preparando música
+          </p>
+          <strong class="music-track" id="musicTrack"></strong>
+        </div>
+        <button
+          class="music-collapse"
+          id="musicCollapse"
+          type="button"
+          aria-controls="musicBody"
+          aria-expanded="true"
+          aria-label="Minimizar reproductor"
+        >
+          −
+        </button>
+      </div>
+      <div id="musicBody">
+        <div
+          class="music-controls"
+          role="group"
+          aria-label="Controles de reproducción"
+        >
+          <button id="musicPrevious" type="button" aria-label="Pista anterior">
+            ↶
+          </button>
+          <button class="music-toggle" id="musicToggle" type="button">
+            Reproducir
+          </button>
+          <button id="musicNext" type="button" aria-label="Pista siguiente">
+            ↷
+          </button>
+        </div>
+        <div class="music-volume">
+          <label for="musicVolume">Volumen</label>
+          <input
+            id="musicVolume"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="12"
+            aria-describedby="musicVolumeValue"
+          />
+          <output id="musicVolumeValue" for="musicVolume">12%</output>
+        </div>
+      </div>
+    </aside>
+    <audio id="ambientAudio" preload="metadata"></audio>
     <script src="js/script.js"></script>
     <script src="js/accesibilidad.js"></script>
+    <script src="js/reproductor.js"></script>
     <script type="module" src="js/formulario.js"></script>
   </body>
 </html>

@@ -25,11 +25,12 @@ jobs:
       - name: Preparar sitio estático
         run: |
           mkdir -p _site
-          rsync -a --exclude='backend/' docs/ _site/
+          rsync -a docs/ _site/
+          sed 's|\.\./docs/|./|g' "trabajo final/presentacion.html" > _site/presentacion.html
           touch _site/.nojekyll
           test -f _site/index.html
           test -f _site/js/firebase-config.js
-          test ! -d _site/backend
+          test -f _site/presentacion.html
 
       - name: Subir sitio preparado
         uses: actions/upload-pages-artifact@v4

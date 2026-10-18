@@ -16,7 +16,7 @@ Las reglas permiten crear solicitudes con campos y valores válidos a usuarios a
 1. En Compilación → Authentication, pulsa Comenzar.
 2. En Método de acceso, habilita Anónimo.
 3. Habilita Correo electrónico/contraseña. No necesitas el acceso mediante enlace de correo.
-4. Revisa Configuración → Dominios autorizados. Añade `localhost` para las pruebas y el dominio que utilices al publicar.
+4. Revisa Configuración → Dominios autorizados. Añade `localhost` para las pruebas y `leninasto.github.io` para la web publicada.
 
 ## 3. Autorizar tu cuenta administrativa
 
@@ -30,12 +30,12 @@ La existencia de ese documento concede permiso de lectura. Un usuario registrado
 
 ## 4. Probar el recorrido
 
-1. Ejecuta `python -m http.server 8000 --directory docs` desde la raíz del proyecto.
-2. Abre http://localhost:8000/contacto.html.
+1. Ejecuta `python -m http.server 8000` desde la raíz del proyecto.
+2. Abre http://localhost:8000/docs/contacto.html.
 3. Completa una solicitud con datos ficticios, acepta el consentimiento y envía una sola vez.
 4. Espera el mensaje de éxito y el código del registro. Si falla, revisa el mensaje y conserva los datos para reintentar.
 5. Comprueba el documento en Firestore → Datos → `solicitudes`.
-6. Abre http://localhost:8000/registros.html e ingresa con tu cuenta autorizada.
+6. Abre http://localhost:8000/docs/registros.html e ingresa con tu cuenta autorizada.
 7. Busca, filtra y pulsa Exportar CSV. Si Excel no separa las columnas, usa Datos → Desde texto/CSV y selecciona UTF-8 y coma.
 8. En Google Sheets, usa Archivo → Importar → Subir y selecciona el CSV.
 9. Cierra sesión al terminar.
@@ -59,7 +59,7 @@ Las sesiones de acceso se conservan durante la sesión del navegador. El panel c
 
 Antes de abrir el formulario al público, configura Firebase App Check, revisa cuotas y alertas de uso y establece una política de privacidad y conservación de datos. La autenticación anónima y las reglas validan acceso y datos, pero no equivalen a un límite de envíos ni impiden por sí solas el spam.
 
-El backend PHP es una alternativa independiente: para usarlo cambia `storageMode` a `"php"`. Los errores de Firebase nunca cambian automáticamente de proveedor ni guardan copias locales.
+El formulario guarda únicamente en Firebase. Los errores no generan copias locales de los datos personales.
 
 ## Referencias oficiales
 

@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/reproductor.css" />
 
     <style>
       .home-highlight {
@@ -31,7 +32,7 @@
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header>
       <nav
-        class="navbar navbar-expand-lg site-nav sticky-top"
+        class="navbar navbar-expand-lg site-nav"
         aria-label="Navegación principal"
       >
         <div class="container">
@@ -129,7 +130,7 @@
 
       <section class="section-space" aria-labelledby="programas-destacados">
         <div class="container">
-          <div class="section-heading reveal">
+          <div class="section-heading">
             <span class="eyebrow">Rutas de aprendizaje</span>
             <h2 id="programas-destacados">
               Encuentra el escenario que va contigo.
@@ -140,7 +141,7 @@
             </p>
           </div>
           <div class="row g-4">
-            <article class="col-md-6 col-lg-4 reveal">
+            <article class="col-md-6 col-lg-4">
               <div class="program-card">
                 <img
                   src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80"
@@ -160,7 +161,7 @@
                 </div>
               </div>
             </article>
-            <article class="col-md-6 col-lg-4 reveal">
+            <article class="col-md-6 col-lg-4">
               <div class="program-card">
                 <img
                   src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=900&q=80"
@@ -180,7 +181,7 @@
                 </div>
               </div>
             </article>
-            <article class="col-md-6 col-lg-4 reveal">
+            <article class="col-md-6 col-lg-4">
               <div class="program-card">
                 <img
                   src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=900&q=80"
@@ -206,7 +207,7 @@
 
       <section class="section-space surface-dark" aria-labelledby="metodo">
         <div class="container">
-          <div class="section-heading reveal">
+          <div class="section-heading">
             <span class="eyebrow">Nuestro método</span>
             <h2 id="metodo">Disciplina clásica, mirada actual.</h2>
             <p>
@@ -214,7 +215,7 @@
               generaciones y los conectamos con herramientas creativas de hoy.
             </p>
           </div>
-          <div class="feature-grid reveal">
+          <div class="feature-grid">
             <article class="feature-item">
               <span class="feature-number">01 · BASE</span>
               <h3>Técnica comprensible</h3>
@@ -245,26 +246,26 @@
 
       <section class="section-space" aria-labelledby="proceso">
         <div class="container">
-          <div class="section-heading reveal">
+          <div class="section-heading">
             <span class="eyebrow">Empieza sin enredos</span>
             <h2 id="proceso">Tres pasos. Cero drama.</h2>
           </div>
           <div class="steps">
-            <article class="step reveal">
+            <article class="step">
               <span class="step-index">1</span>
               <h3>Cuéntanos tu interés</h3>
               <p>
                 Completa el formulario con el área, edad y horario que buscas.
               </p>
             </article>
-            <article class="step reveal">
+            <article class="step">
               <span class="step-index">2</span>
               <h3>Recibe orientación</h3>
               <p>
                 Revisamos tu perfil y te recomendamos nivel, formato y ruta.
               </p>
             </article>
-            <article class="step reveal">
+            <article class="step">
               <span class="step-index">3</span>
               <h3>Inicia tu formación</h3>
               <p>
@@ -278,7 +279,7 @@
 
       <section class="pb-5">
         <div class="container">
-          <div class="cta-band reveal">
+          <div class="cta-band">
             <div class="row align-items-center g-4">
               <div class="col-lg-8">
                 <span class="eyebrow text-white">Tu siguiente paso</span>
@@ -348,10 +349,11 @@
         class="utility-button"
         id="ambientButton"
         type="button"
-        aria-pressed="false"
+        aria-expanded="true"
+        aria-controls="musicBody"
+        aria-label="Expandir o minimizar reproductor de música"
       >
-        <span aria-hidden="true">♪</span
-        ><span class="visually-hidden">Activar música ambiental</span>
+        <span aria-hidden="true">♪</span>
       </button>
       <button class="utility-button back-to-top" id="backToTop" type="button">
         <span aria-hidden="true">↑</span
@@ -422,13 +424,69 @@
         Restablecer preferencias
       </button>
     </aside>
-    <audio
-      id="ambientAudio"
-      src="audio/ambiente.wav"
-      loop
-      preload="none"
-    ></audio>
+    <aside
+      class="music-player"
+      id="musicPlayer"
+      aria-label="Reproductor de música de fondo"
+    >
+      <div class="music-header">
+        <span class="music-disc" aria-hidden="true">♪</span>
+        <div class="music-caption">
+          <p
+            class="music-status"
+            id="musicStatus"
+            role="status"
+            aria-live="polite"
+          >
+            Preparando música
+          </p>
+          <strong class="music-track" id="musicTrack"></strong>
+        </div>
+        <button
+          class="music-collapse"
+          id="musicCollapse"
+          type="button"
+          aria-controls="musicBody"
+          aria-expanded="true"
+          aria-label="Minimizar reproductor"
+        >
+          −
+        </button>
+      </div>
+      <div id="musicBody">
+        <div
+          class="music-controls"
+          role="group"
+          aria-label="Controles de reproducción"
+        >
+          <button id="musicPrevious" type="button" aria-label="Pista anterior">
+            ↶
+          </button>
+          <button class="music-toggle" id="musicToggle" type="button">
+            Reproducir
+          </button>
+          <button id="musicNext" type="button" aria-label="Pista siguiente">
+            ↷
+          </button>
+        </div>
+        <div class="music-volume">
+          <label for="musicVolume">Volumen</label>
+          <input
+            id="musicVolume"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="12"
+            aria-describedby="musicVolumeValue"
+          />
+          <output id="musicVolumeValue" for="musicVolume">12%</output>
+        </div>
+      </div>
+    </aside>
+    <audio id="ambientAudio" preload="metadata"></audio>
     <script src="js/script.js"></script>
     <script src="js/accesibilidad.js"></script>
+    <script src="js/reproductor.js"></script>
   </body>
 </html>

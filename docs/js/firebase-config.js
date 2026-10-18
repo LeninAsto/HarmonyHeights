@@ -1,5 +1,3 @@
-export const storageMode = "firebase";
-
 export const firebaseConfig = {
   apiKey: "AIzaSyBdUBL-Yp-Em4KC-gfINNiAMJI4or8HqQA",
   authDomain: "harmony-heights-41e77.firebaseapp.com",

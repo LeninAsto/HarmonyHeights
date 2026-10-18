@@ -1,0 +1,170 @@
+.music-player {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 1070;
+  width: min(23rem, calc(100vw - 6rem));
+  padding: 1rem;
+  border: 1px solid #b6bec8;
+  border-radius: 1.25rem;
+  background: #ffffff;
+  color: #10233f;
+  box-shadow: 0 8px 30px #10233f26;
+  font:
+    400 0.95rem/1.4 "Source Sans 3",
+    system-ui,
+    sans-serif;
+}
+.music-player[hidden],
+.music-player [hidden] {
+  display: none !important;
+}
+.music-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.music-disc {
+  display: grid;
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid #b6bec8;
+  border-radius: 50%;
+  background: #e4ede8;
+  font-size: 1.2rem;
+}
+.is-playing .music-disc {
+  background: #10233f;
+  color: #ffffff;
+}
+.music-caption {
+  flex: 1;
+  min-width: 0;
+}
+.music-status {
+  margin: 0 0 0.2rem;
+  color: #36506f;
+  font-size: 0.78rem;
+}
+.music-track {
+  display: block;
+  font-size: 0.94rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.music-player button {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #6b7b90;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  color: #10233f;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.music-player button:hover {
+  background: #e4ede8;
+}
+.music-player .music-collapse {
+  flex: 0 0 2.5rem;
+  padding: 0;
+  font-size: 1.2rem;
+}
+.music-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.music-player .music-toggle {
+  background: #10233f;
+  color: #ffffff;
+}
+.music-volume {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.music-volume label {
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+.music-volume input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 1.5rem;
+  accent-color: #10233f;
+  cursor: pointer;
+}
+.music-volume output {
+  min-width: 2.6rem;
+  font-size: 0.83rem;
+  text-align: right;
+}
+.music-player :focus-visible {
+  outline: 3px solid #96321f;
+  outline-offset: 3px;
+}
+.music-player.is-collapsed {
+  padding: 0.7rem;
+}
+.is-collapsed .music-track {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.presentation-page .music-player {
+  right: 1.5rem;
+  bottom: 5.5rem;
+  left: auto;
+  z-index: 30;
+}
+html.a11y-contrast .music-player,
+html.a11y-contrast .music-player button,
+html.a11y-contrast .music-disc {
+  border-color: #ffffff;
+  background: #000000;
+  color: #ffffff;
+}
+html.a11y-contrast .music-player .music-toggle,
+html.a11y-contrast .is-playing .music-disc {
+  background: #ffeb3b;
+  color: #000000;
+}
+html.a11y-contrast .music-status {
+  color: #ffffff;
+}
+html.a11y-contrast .music-volume input {
+  accent-color: #ffeb3b;
+}
+html.a11y-contrast .music-player :focus-visible {
+  outline-color: #00ffff;
+}
+@media (max-width: 575.98px) {
+  .music-player {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    width: calc(100vw - 5.5rem);
+    padding: 0.8rem;
+  }
+  .music-disc {
+    display: none;
+  }
+  .music-controls {
+    margin-block: 0.75rem;
+  }
+  .music-player button {
+    padding-inline: 0.55rem;
+  }
+  .presentation-page .music-player {
+    right: 0.75rem;
+  }
+}
+@media print {
+  .music-player {
+    display: none;
+  }
+}

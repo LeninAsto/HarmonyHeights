@@ -19,12 +19,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/reproductor.css" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header>
       <nav
-        class="navbar navbar-expand-lg site-nav sticky-top"
+        class="navbar navbar-expand-lg site-nav"
         aria-label="Navegación principal"
       >
         <div class="container">
@@ -87,7 +88,7 @@
       <section class="section-space">
         <div class="container">
           <div class="row align-items-center g-5">
-            <div class="col-lg-6 reveal">
+            <div class="col-lg-6">
               <img
                 class="story-image"
                 src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1100&q=85"
@@ -96,7 +97,7 @@
                 height="900"
               />
             </div>
-            <div class="col-lg-6 reveal">
+            <div class="col-lg-6">
               <span class="eyebrow">Nuestro propósito</span>
               <h2>Formar artistas, no fabricar copias.</h2>
               <p>
@@ -119,11 +120,11 @@
       </section>
       <section class="section-space surface-dark">
         <div class="container">
-          <div class="section-heading reveal">
+          <div class="section-heading">
             <span class="eyebrow">Principios</span>
             <h2>Lo que guía cada clase.</h2>
           </div>
-          <div class="feature-grid reveal">
+          <div class="feature-grid">
             <article class="feature-item">
               <span class="feature-number">01 · EXCELENCIA</span>
               <h3>Calidad con paciencia</h3>
@@ -153,12 +154,12 @@
       </section>
       <section class="section-space">
         <div class="container">
-          <div class="section-heading reveal">
+          <div class="section-heading">
             <span class="eyebrow">Compromiso educativo</span>
             <h2>Una experiencia clara desde el primer contacto.</h2>
           </div>
           <div class="row g-4">
-            <div class="col-md-4 reveal">
+            <div class="col-md-4">
               <article class="value-card">
                 <h3>Orientación inicial</h3>
                 <p>
@@ -167,7 +168,7 @@
                 </p>
               </article>
             </div>
-            <div class="col-md-4 reveal">
+            <div class="col-md-4">
               <article class="value-card">
                 <h3>Progreso observable</h3>
                 <p>
@@ -176,7 +177,7 @@
                 </p>
               </article>
             </div>
-            <div class="col-md-4 reveal">
+            <div class="col-md-4">
               <article class="value-card">
                 <h3>Comunicación honesta</h3>
                 <p>
@@ -190,7 +191,7 @@
       </section>
       <section class="pb-5">
         <div class="container">
-          <div class="cta-band reveal">
+          <div class="cta-band">
             <div class="row align-items-center g-4">
               <div class="col-lg-8">
                 <h2>¿Quieres encontrar tu ruta?</h2>
@@ -259,10 +260,11 @@
         class="utility-button"
         id="ambientButton"
         type="button"
-        aria-pressed="false"
+        aria-expanded="true"
+        aria-controls="musicBody"
+        aria-label="Expandir o minimizar reproductor de música"
       >
-        <span aria-hidden="true">♪</span
-        ><span class="visually-hidden">Activar música ambiental</span>
+        <span aria-hidden="true">♪</span>
       </button>
       <button class="utility-button back-to-top" id="backToTop" type="button">
         <span aria-hidden="true">↑</span
@@ -333,13 +335,69 @@
         Restablecer preferencias
       </button>
     </aside>
-    <audio
-      id="ambientAudio"
-      src="audio/ambiente.wav"
-      loop
-      preload="none"
-    ></audio>
+    <aside
+      class="music-player"
+      id="musicPlayer"
+      aria-label="Reproductor de música de fondo"
+    >
+      <div class="music-header">
+        <span class="music-disc" aria-hidden="true">♪</span>
+        <div class="music-caption">
+          <p
+            class="music-status"
+            id="musicStatus"
+            role="status"
+            aria-live="polite"
+          >
+            Preparando música
+          </p>
+          <strong class="music-track" id="musicTrack"></strong>
+        </div>
+        <button
+          class="music-collapse"
+          id="musicCollapse"
+          type="button"
+          aria-controls="musicBody"
+          aria-expanded="true"
+          aria-label="Minimizar reproductor"
+        >
+          −
+        </button>
+      </div>
+      <div id="musicBody">
+        <div
+          class="music-controls"
+          role="group"
+          aria-label="Controles de reproducción"
+        >
+          <button id="musicPrevious" type="button" aria-label="Pista anterior">
+            ↶
+          </button>
+          <button class="music-toggle" id="musicToggle" type="button">
+            Reproducir
+          </button>
+          <button id="musicNext" type="button" aria-label="Pista siguiente">
+            ↷
+          </button>
+        </div>
+        <div class="music-volume">
+          <label for="musicVolume">Volumen</label>
+          <input
+            id="musicVolume"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="12"
+            aria-describedby="musicVolumeValue"
+          />
+          <output id="musicVolumeValue" for="musicVolume">12%</output>
+        </div>
+      </div>
+    </aside>
+    <audio id="ambientAudio" preload="metadata"></audio>
     <script src="js/script.js"></script>
     <script src="js/accesibilidad.js"></script>
+    <script src="js/reproductor.js"></script>
   </body>
 </html>

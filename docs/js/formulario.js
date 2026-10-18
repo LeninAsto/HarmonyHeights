@@ -1,10 +1,10 @@
-import { storageMode } from "./firebase-config.js";
 import { saveRegistration } from "./firebase.js";
 
 const form = document.querySelector("#interestForm");
 const button = form.querySelector("button[type='submit']");
 const status = document.querySelector("#formStatus");
 form.noValidate = true;
+button.disabled = false;
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -46,27 +46,11 @@ form.addEventListener("submit", async (event) => {
   );
 
   try {
-    if (storageMode === "firebase") {
-      const record = await saveRegistration(data);
-      showStatus(
-        "success",
-        "¡Solicitud recibida! Tu código de registro es " + record.id + ".",
-      );
-    } else if (storageMode === "php") {
-      const response = await fetch(form.action, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.headers.get("content-type")?.includes("application/json")) {
-        throw new Error("El servidor PHP no está disponible.");
-      }
-      const result = await response.json();
-      if (!response.ok || !result.ok) throw new Error(result.message);
-      showStatus("success", result.message);
-    } else {
-      throw new Error("El modo de almacenamiento no es válido.");
-    }
+    const record = await saveRegistration(data);
+    showStatus(
+      "success",
+      "¡Solicitud recibida! Tu código de registro es " + record.id + ".",
+    );
     form.reset();
     form.classList.remove("was-validated");
   } catch (error) {

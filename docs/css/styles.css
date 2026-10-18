@@ -421,9 +421,6 @@ img {
   background: var(--ink);
   color: var(--white);
 }
-.program-item[hidden] {
-  display: none !important;
-}
 .schedule-table {
   overflow: hidden;
   border-radius: var(--radius);
@@ -484,10 +481,6 @@ textarea.form-control {
 .form-status.success {
   background: #dff4e7;
   color: #155c37;
-}
-.form-status.demo {
-  background: #fff1ce;
-  color: #704b00;
 }
 .form-status.error {
   background: #ffe1dc;
@@ -699,10 +692,6 @@ html.a11y-motion *::after {
   animation: none !important;
   transition: none !important;
 }
-html.a11y-motion .reveal {
-  opacity: 1 !important;
-  transform: none !important;
-}
 .site-footer {
   padding: 4rem 0 2rem;
   background: #09182c;
@@ -722,10 +711,6 @@ html.a11y-motion .reveal {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-.reveal {
-  opacity: 1;
-  transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
   *,

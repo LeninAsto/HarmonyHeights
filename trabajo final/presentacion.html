@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../docs/css/reproductor.css" />
     <style>
       :root {
         --primary: #9b452d;
@@ -340,6 +341,56 @@
         color: var(--soft);
         font-size: 0.82rem;
       }
+      .live-site-slide .slide-inner {
+        width: min(1400px, 100%);
+      }
+      .live-site-slide h2 {
+        margin-block: 0.8rem 1rem;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+      }
+      .demo-browser {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 1.2rem;
+        background: #ffffff;
+        box-shadow: 0 12px 32px var(--shadow);
+      }
+      .demo-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 1rem;
+        background: var(--surface-box);
+      }
+      .demo-address {
+        flex: 1 1 14rem;
+        color: var(--soft);
+        font-size: 0.85rem;
+        overflow-wrap: anywhere;
+      }
+      .demo-toolbar a,
+      .demo-toolbar button {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        background: #ffffff;
+        color: var(--primary);
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .demo-browser iframe {
+        display: block;
+        width: 100%;
+        height: clamp(320px, 55vh, 680px);
+        border: 0;
+      }
+      .demo-note {
+        margin-block: 0.75rem 0;
+        font-size: 0.9rem;
+      }
       @keyframes enter {
         from {
           opacity: 0;
@@ -400,7 +451,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="presentation-page">
     <main class="presentation" aria-label="Presentación Harmony Heights">
       <header class="top-bar">
         <div class="brand">
@@ -620,14 +671,15 @@
               <article class="card">
                 <h3>Comodidad</h3>
                 <p>
-                  Preferencias persistentes, volver arriba y música opcional sin
-                  autoplay.
+                  Preferencias persistentes, volver arriba y música con volumen
+                  bajo y controles visibles.
                 </p>
               </article>
             </div>
             <p class="lead">
-              Una melodía original se reproduce con un elemento audio y solo
-              comienza por decisión del usuario.
+              Cuatro pistas clásicas con pausa, cambio de obra y volumen. Si el
+              navegador bloquea el inicio automático, el audio espera una
+              interacción del usuario.
             </p>
           </div>
         </section>
@@ -717,7 +769,10 @@
               </li>
               <li>
                 <span class="resource-icon">♪</span
-                ><span><strong>Audio HTML</strong><br />Melodía opcional.</span>
+                ><span
+                  ><strong>Audio HTML</strong><br />Lista de cuatro
+                  pistas.</span
+                >
               </li>
               <li>
                 <span class="resource-icon">QA</span
@@ -759,6 +814,39 @@
           </div>
         </section>
 
+        <section class="slide live-site-slide" aria-labelledby="liveSiteTitle">
+          <div class="slide-inner">
+            <span class="step">Demostración en vivo</span>
+            <h2 id="liveSiteTitle">Harmony Heights en funcionamiento</h2>
+            <div class="demo-browser">
+              <div class="demo-toolbar">
+                <span class="demo-address"
+                  >leninasto.github.io/HarmonyHeights</span
+                >
+                <button id="reloadDemo" type="button">Recargar</button>
+                <a
+                  href="https://leninasto.github.io/HarmonyHeights/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Abrir en otra pestaña ↗</a
+                >
+              </div>
+              <iframe
+                id="liveSite"
+                title="Demostración interactiva de Harmony Heights"
+                data-src="https://leninasto.github.io/HarmonyHeights/?presentacion=1"
+                allow="fullscreen"
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+            <p class="demo-note">
+              Puedes navegar y probar el sitio dentro de esta diapositiva.
+              Requiere conexión a internet; si no carga, usa el enlace para
+              abrirlo en otra pestaña.
+            </p>
+          </div>
+        </section>
+
         <section class="slide" aria-labelledby="s11">
           <div class="slide-inner">
             <span class="step">Resultado</span>
@@ -781,8 +869,8 @@
                 <p>Filtros, animación, accesibilidad, mapa y audio.</p>
               </article>
               <article class="card green">
-                <h3>Backend mínimo</h3>
-                <p>POST validado y almacenamiento sencillo.</p>
+                <h3>Registros privados</h3>
+                <p>Solicitudes en Firebase y exportación CSV.</p>
               </article>
             </div>
           </div>
@@ -791,7 +879,7 @@
       <nav class="navigation" aria-label="Controles de la presentación">
         <span class="key-hint">Usa ← → o Espacio</span>
         <div class="progress-wrap">
-          <span class="progress-text" id="counter">1 / 11</span>
+          <span class="progress-text" id="counter">1 / 12</span>
           <div class="progress-track" aria-hidden="true">
             <div class="progress-bar" id="progress"></div>
           </div>
@@ -815,6 +903,68 @@
         </div>
       </nav>
     </main>
+    <aside
+      class="music-player"
+      id="musicPlayer"
+      aria-label="Reproductor de música de fondo"
+    >
+      <div class="music-header">
+        <span class="music-disc" aria-hidden="true">♪</span>
+        <div class="music-caption">
+          <p
+            class="music-status"
+            id="musicStatus"
+            role="status"
+            aria-live="polite"
+          >
+            Preparando música
+          </p>
+          <strong class="music-track" id="musicTrack"></strong>
+        </div>
+        <button
+          class="music-collapse"
+          id="musicCollapse"
+          type="button"
+          aria-controls="musicBody"
+          aria-expanded="true"
+          aria-label="Minimizar reproductor"
+        >
+          −
+        </button>
+      </div>
+      <div id="musicBody">
+        <div
+          class="music-controls"
+          role="group"
+          aria-label="Controles de reproducción"
+        >
+          <button id="musicPrevious" type="button" aria-label="Pista anterior">
+            ↶
+          </button>
+          <button class="music-toggle" id="musicToggle" type="button">
+            Reproducir
+          </button>
+          <button id="musicNext" type="button" aria-label="Pista siguiente">
+            ↷
+          </button>
+        </div>
+        <div class="music-volume">
+          <label for="musicVolume">Volumen</label>
+          <input
+            id="musicVolume"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="12"
+            aria-describedby="musicVolumeValue"
+          />
+          <output id="musicVolumeValue" for="musicVolume">12%</output>
+        </div>
+      </div>
+    </aside>
+    <audio id="ambientAudio" preload="metadata"></audio>
+    <script src="../docs/js/reproductor.js"></script>
     <script>
       "use strict";
       const slides = [...document.querySelectorAll(".slide")],
@@ -823,6 +973,7 @@
         counter = document.querySelector("#counter"),
         progress = document.querySelector("#progress");
       let current = 0;
+      const liveSite = document.querySelector("#liveSite");
       function showSlide(index) {
         current = Math.max(0, Math.min(slides.length - 1, index));
         slides.forEach((slide, position) => {
@@ -830,6 +981,13 @@
           slide.classList.toggle("active", active);
           slide.setAttribute("aria-hidden", (!active).toString());
         });
+        if (slides[current].classList.contains("live-site-slide")) {
+          if (!liveSite.getAttribute("src"))
+            liveSite.src = liveSite.dataset.src;
+          const musicCollapse = document.querySelector("#musicCollapse");
+          if (musicCollapse.getAttribute("aria-expanded") === "true")
+            musicCollapse.click();
+        }
         counter.textContent = `${current + 1} / ${slides.length}`;
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
         previous.disabled = current === 0;
@@ -840,7 +998,16 @@
       }
       previous.addEventListener("click", () => showSlide(current - 1));
       next.addEventListener("click", () => showSlide(current + 1));
+      document.querySelector("#reloadDemo").addEventListener("click", () => {
+        liveSite.src = liveSite.dataset.src;
+      });
       document.addEventListener("keydown", (event) => {
+        if (
+          event.target.closest(
+            "button, a, input, select, textarea, [contenteditable='true']",
+          )
+        )
+          return;
         if (["ArrowRight", "PageDown", " "].includes(event.key)) {
           event.preventDefault();
           showSlide(current + 1);
