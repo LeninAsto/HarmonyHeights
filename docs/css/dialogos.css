@@ -1,0 +1,82 @@
+html.dialog-open, html.dialog-open body { overflow: hidden; }
+.hh-dialog {
+  box-sizing: border-box;
+  width: min(46rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 3rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 1.6rem;
+  background: var(--white, var(--surface));
+  color: var(--ink);
+  box-shadow: 0 24px 100px #0006;
+  overflow: hidden;
+}
+.hh-dialog::backdrop { background: #071222b8; backdrop-filter: blur(6px); }
+.hh-dialog[open] { animation: dialog-appear .22s ease-out; }
+.dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--line); }
+.dialog-header h2 { margin: .35rem 0 0; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+.dialog-close, .viewer-control, .viewer-original {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .8rem;
+  border: 1px solid var(--line); border-radius: 2rem;
+  background: transparent; color: var(--ink); font: inherit; cursor: pointer;
+}
+.dialog-close { flex-shrink: 0; font-size: 1.35rem; }
+.hh-dialog :focus-visible, .maquette-tile:focus-visible { outline: 3px solid var(--coral, var(--primary)); outline-offset: 4px; }
+.dialog-scroll { overflow-y: auto; overscroll-behavior: contain; max-height: calc(100dvh - 12rem); padding: 1.5rem 1.6rem 2rem; }
+.program-summary { font-size: 1.15rem; }
+.program-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; margin: 1.4rem 0; }
+.program-facts div { padding: .9rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--paper); }
+.program-facts dt { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+.program-facts dd { margin: .3rem 0 0; font-weight: 700; }
+.program-detail-heading { margin: 1.5rem 0 .7rem; font-size: 1.5rem; }
+.program-action { display: inline-flex; margin-top: .7rem; }
+button.text-link { padding: 0; border: 0; background: none; font: inherit; font-weight: 800; text-align: left; cursor: pointer; }
+.sheet-handle { display: none; }
+@keyframes dialog-appear { from { opacity: 0; transform: translateY(1.5rem) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes sheet-appear { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@media (max-width: 767px) {
+  .program-dialog { width: 100%; max-height: 92dvh; margin: auto 0 0; border-radius: 1.5rem 1.5rem 0 0; border-bottom: 0; transition: transform .18s ease-out; }
+  .program-dialog[open] { animation: sheet-appear .28s ease-out; }
+  .sheet-handle { display: grid; justify-items: center; gap: .4rem; padding: .75rem 1rem .4rem; touch-action: none; cursor: grab; color: var(--ink-soft); font-size: .75rem; user-select: none; }
+  .sheet-handle::before { content: ""; display: block; width: 2.8rem; height: .3rem; border-radius: 1rem; background: var(--line); }
+  .program-dialog .dialog-header { padding: .7rem 1.15rem 1rem; }
+  .program-dialog .dialog-scroll { padding: 1.15rem 1.15rem max(1.5rem, env(safe-area-inset-bottom)); max-height: calc(92dvh - 10.5rem); }
+  .program-dialog.is-dragging { transition: none; }
+}
+/* Presentation collage and full-image viewer. */
+.maquette-slide h2 { font-size: clamp(2rem, 4.3vw, 3.8rem); margin: .8rem 0; }
+.maquette-intro { margin: 0 0 1.2rem; }
+.maquette-collage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.3rem; padding: .4rem; }
+.maquette-tile { position: relative; margin: 0; padding: .55rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-box); color: var(--ink); text-align: left; cursor: zoom-in; transform: rotate(-1deg); transition: transform .2s, box-shadow .2s; }
+.maquette-tile:nth-child(2n) { transform: rotate(1.3deg); }
+.maquette-tile:nth-child(3n) { transform: rotate(-.6deg); }
+.maquette-tile:hover { transform: translateY(-4px) rotate(0); box-shadow: 0 12px 32px #0003; }
+.maquette-tile img { display: block; width: 100%; height: clamp(120px, 21vh, 205px); object-fit: contain; background: #fff; border-radius: .6rem; }
+.maquette-caption { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: .65rem .35rem .25rem; font-size: .9rem; font-weight: 700; }
+.maquette-caption span { font-size: .75rem; font-weight: 400; }
+.image-dialog { width: min(75rem, calc(100% - 2rem)); background: var(--surface); }
+.image-dialog .dialog-header { align-items: center; padding: .7rem 1rem; }
+.image-dialog .dialog-header h2 { margin: 0; font-size: 1.2rem; }
+.image-stage { margin: 0; padding: .8rem 1rem; }
+.image-stage img { display: block; width: 100%; height: calc(100dvh - 15rem); object-fit: contain; }
+.image-stage figcaption { margin-top: .6rem; color: var(--soft); text-align: center; font-size: .85rem; }
+.viewer-toolbar { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem; padding: 0 1rem 1rem; }
+.viewer-original { font-size: .85rem; text-decoration: none; }
+@media (max-width: 600px) {
+  .maquette-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+  .maquette-tile img { height: 150px; }
+  .maquette-caption { display: block; font-size: .8rem; }
+  .maquette-caption span { display: block; }
+  .image-dialog { width: calc(100% - 1rem); max-height: calc(100dvh - 1rem); }
+  .image-stage { padding: .5rem; }
+  .image-stage img { height: calc(100dvh - 13rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hh-dialog[open] { animation: none; }
+  .maquette-tile, .program-dialog { transition: none; }
+}
+html.a11y-motion .hh-dialog[open] { animation: none; }
+html.a11y-contrast .hh-dialog { background: #000; color: #fff; }

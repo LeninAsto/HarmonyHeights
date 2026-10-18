@@ -72,3 +72,16 @@ y exige `success`, el hostname autorizado y la acción `contacto`. Solo entonces
 el Admin SDK guarda el registro con UID autenticado y fecha del servidor.
 Las reglas bloquean la creación directa desde clientes, manteniendo la lectura
 reservada a administradores. Un fallo de verificación no crea registros.
+
+## Consulta de programas y collage de maquetación
+
+Los seis programas ofrecen detalles en un diálogo nativo, con información por
+tarjeta. En escritorio aparece centrado; en móvil entra desde el borde inferior
+y se cierra arrastrando su barra hacia abajo. El diálogo mantiene el foco en su
+interior, acepta Escape, bloquea el fondo y devuelve el foco al control de origen.
+Los filtros y la posición de la página se conservan al consultar detalles.
+
+La presentación incluye 17 diapositivas. Añade objetivos previos al desarrollo y
+un recorrido de publicación y verificación en GitHub Pages. La maquetación usa
+las seis imágenes aportadas por el autor en un collage con visor de imagen
+completa, navegación anterior/siguiente y acceso al archivo original.

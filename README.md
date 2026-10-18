@@ -64,7 +64,7 @@ requieren activar Google, guardar la clave secreta en Firebase y desplegar la fu
 
 El botón de tema cambia entre claro y oscuro en el sitio y la presentación.
 Respeta la preferencia del sistema hasta que el usuario elige un tema y guarda
-su elección localmente. La presentación incluye idea, maquetación esquemática e
+su elección localmente. La presentación incluye idea, un collage de seis maquetas ampliables e
 implementación, además de una demostración del sitio local.
 
 ## Entrega y backend
@@ -81,3 +81,15 @@ Para instalar y probar el backend con Node.js 22:
 npm --prefix functions ci
 npm --prefix functions test
 ```
+
+## Detalles de programas y presentación
+
+En Programas, **Ver detalles** abre una ventana con el contenido del programa.
+En móvil se convierte en un panel inferior: arrastra su barra hacia abajo para
+cerrarlo, o utiliza el botón de cierre. También admite Escape y cierre desde el
+fondo. Al salir, conserva el filtro seleccionado y devuelve el foco a la tarjeta.
+
+La presentación tiene 17 diapositivas, con objetivos previos y el proceso de
+publicación y verificación en GitHub. La maquetación muestra las seis imágenes
+originales en un collage: al pulsarlas, un visor enseña la imagen completa,
+permite recorrer las demás y abrir el archivo original.

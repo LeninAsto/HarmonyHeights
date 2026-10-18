@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/reproductor.css" />
     <link rel="stylesheet" href="css/tema.css" />
     <script src="js/tema.js"></script>
+    <link rel="stylesheet" href="css/dialogos.css" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -140,7 +141,7 @@
                     Lectura, postura, técnica y repertorio desde una base
                     progresiva.
                   </p>
-                  <a class="text-link" href="musica.html">Ver detalles →</a>
+                  <button class="text-link" type="button" data-program-detail="piano" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -161,7 +162,7 @@
                     Acordes, ritmo, oído y repertorio para tocar de forma
                     consciente.
                   </p>
-                  <a class="text-link" href="musica.html">Ver detalles →</a>
+                  <button class="text-link" type="button" data-program-detail="guitarra" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -182,7 +183,7 @@
                     Respiración, afinación, cuidado vocal e interpretación de
                     canciones.
                   </p>
-                  <a class="text-link" href="musica.html">Ver detalles →</a>
+                  <button class="text-link" type="button" data-program-detail="canto" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -203,7 +204,7 @@
                     Coordinación, musicalidad y secuencias con energía y
                     control.
                   </p>
-                  <a class="text-link" href="danza.html">Ver detalles →</a>
+                  <button class="text-link" type="button" data-program-detail="urbana" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -224,7 +225,7 @@
                     Alineación, fuerza y vocabulario clásico con progresión
                     respetuosa.
                   </p>
-                  <a class="text-link" href="danza.html">Ver detalles →</a>
+                  <button class="text-link" type="button" data-program-detail="ballet" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -245,9 +246,7 @@
                     Creación colectiva que integra cuerpo, voz, ritmo y
                     presencia.
                   </p>
-                  <a class="text-link" href="contacto.html"
-                    >Consultar apertura →</a
-                  >
+                  <button class="text-link" type="button" data-program-detail="escena" aria-haspopup="dialog" aria-controls="programDialog">Ver detalles →</button>
                 </div>
               </div>
             </article>
@@ -473,5 +472,28 @@
     <script src="js/script.js"></script>
     <script src="js/accesibilidad.js"></script>
     <script src="js/reproductor.js"></script>
+    <dialog id="programDialog" class="hh-dialog program-dialog" aria-labelledby="programDetailTitle" aria-describedby="programDetailSummary">
+      <div class="sheet-handle" aria-hidden="true">Desliza hacia abajo para cerrar</div>
+      <header class="dialog-header">
+        <div><span class="eyebrow" id="programDetailCategory"></span><h2 id="programDetailTitle"></h2></div>
+        <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar detalles del programa" autofocus>×</button>
+      </header>
+      <div class="dialog-scroll">
+        <p id="programDetailSummary" class="program-summary"></p>
+        <dl class="program-facts">
+          <div><dt>Edad orientativa</dt><dd data-program-fact="age"></dd></div>
+          <div><dt>Nivel</dt><dd data-program-fact="level"></dd></div>
+          <div><dt>Modalidad</dt><dd data-program-fact="mode"></dd></div>
+          <div><dt>Duración de clase</dt><dd data-program-fact="duration"></dd></div>
+        </dl>
+        <h3 class="program-detail-heading">Qué aprenderás</h3>
+        <ul id="programDetailLearning"></ul>
+        <h3 class="program-detail-heading">Antes de comenzar</h3>
+        <p id="programDetailPreparation"></p>
+        <p class="small">Propuesta académica referencial. El grupo y la disponibilidad se confirman durante la orientación; las franjas del formulario expresan tu preferencia de atención.</p>
+        <a id="programDetailContact" class="btn btn-primary program-action" href="contacto.html">Solicitar orientación →</a>
+      </div>
+    </dialog>
+    <script type="module" src="js/programas.js"></script>
   </body>
 </html>

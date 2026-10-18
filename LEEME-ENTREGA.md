@@ -2,7 +2,7 @@
 
 Incluye días y horarios dependientes, acceso con Google, widget Turnstile,
 validación de servidor, panel de registros, tema claro/oscuro y presentación
-con idea, maquetación e implementación (15 diapositivas).
+con idea, maquetación e implementación (17 diapositivas).
 
 ## Lo que debes completar para recibir formularios
 

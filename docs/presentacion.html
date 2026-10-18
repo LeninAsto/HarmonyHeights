@@ -468,13 +468,10 @@
           animation: none;
         }
       }
-      .wireframe { border: 2px dashed var(--line); box-shadow: none; }
-      .wire-row { display: flex; justify-content: space-between; gap: 1rem; padding: .6rem; border: 1px solid var(--line); font-size: .85rem; }
-      .wire-block { margin: .7rem 0; padding: .8rem; border: 1px dashed var(--line); color: var(--soft); font-size: .95rem; }
-      .wire-columns { display: grid; grid-template-columns: 2fr 1fr; gap: .8rem; }
     </style>
     <link rel="stylesheet" href="css/tema.css" />
     <script src="js/tema.js"></script>
+    <link rel="stylesheet" href="css/dialogos.css" />
   </head>
   <body class="presentation-page">
     <main class="presentation" aria-label="Presentación Harmony Heights">
@@ -506,6 +503,20 @@
               ><span class="arrow">→</span
               ><span class="flow-item">Validar</span>
             </div>
+          </div>
+        </section>
+
+        <section class="slide" aria-labelledby="objectivesTitle">
+          <div class="slide-inner">
+            <span class="step">Antes de construir · Objetivos</span>
+            <h2 id="objectivesTitle">Qué queríamos lograr con esta página.</h2>
+            <p class="lead">Crear un punto de encuentro digital entre la academia y quienes quieren empezar o continuar su formación artística.</p>
+            <div class="grid-3">
+              <article class="card"><span class="number">01 · Informar</span><h3>Una oferta clara</h3><p>Organizar música, danza y escena para que cada visitante entienda los programas y encuentre una ruta adecuada.</p></article>
+              <article class="card tonal"><span class="number">02 · Orientar</span><h3>Un siguiente paso sencillo</h3><p>Consultar los detalles sin perder el recorrido y expresar programa, día y horario preferidos mediante el formulario.</p></article>
+              <article class="card green"><span class="number">03 · Incluir</span><h3>Una experiencia accesible</h3><p>Adaptar la web a móvil y escritorio, facilitar el uso con teclado y ofrecer temas y ajustes de lectura.</p></article>
+            </div>
+            <p class="demo-note">Criterios de éxito: información fácil de encontrar, navegación consistente y solicitudes con datos validados.</p>
           </div>
         </section>
 
@@ -566,7 +577,7 @@
                 <ol>
                   <li>Descubrir la propuesta.</li>
                   <li>Explorar o filtrar programas.</li>
-                  <li>Entrar a una categoría.</li>
+                  <li>Abrir los detalles de un programa.</li>
                   <li>Solicitar orientación.</li>
                   <li>Recibir confirmación.</li>
                 </ol>
@@ -587,18 +598,36 @@
             </div>
           </div>
         </section>
-        <section class="slide" aria-labelledby="wireframeTitle">
+        <section class="slide maquette-slide" aria-labelledby="wireframeTitle">
           <div class="slide-inner">
             <span class="step">Del concepto a la web · 2 / 3</span>
-            <h2 id="wireframeTitle">Maquetación: ordenar antes de decorar.</h2>
-            <div class="grid-2">
-              <div class="card wireframe" aria-label="Esquema de la página de contacto">
-                <div class="wire-row">HH · Navegación <span>Claro / oscuro</span></div>
-                <div class="wire-block"><strong>Título y propuesta</strong><br>Una explicación breve de la solicitud</div>
-                <div class="wire-columns"><div class="wire-block">Cuenta Google<br><br>Datos personales<br><br>Programa<br><br>Día → Horario<br><br>Consentimiento<br><br>[ Enviar solicitud ]</div><div class="wire-block">Información<br>de contacto<br><br>Ubicación<br><br>Mapa</div></div>
-                <div class="wire-row">Pie · enlaces y presentación</div>
-              </div>
-              <div><h3>Jerarquía y estructura</h3><p>La cabecera orienta, el título explica y el formulario concentra la acción principal. La información complementaria ocupa una columna lateral.</p><h3>Adaptación a móvil</h3><p>Las columnas se apilan, los controles mantienen sus etiquetas y el menú se contrae para conservar espacio.</p><p class="demo-note">Esquema explicativo de la estructura implementada; no es una captura de un boceto histórico.</p></div>
+            <h2 id="wireframeTitle">La estructura toma forma.</h2>
+            <p class="maquette-intro">Seis maquetas para ordenar contenido, jerarquía y navegación. Pulsa una imagen para verla completa.</p>
+            <div class="maquette-collage" aria-label="Collage de las seis maquetas">
+              <button class="maquette-tile" type="button" data-maquette="0" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Inicio">
+                <img src="img/maquetacion/IMG-20261017-WA0071.jpg" alt="Maqueta de la página Inicio" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">01 · Inicio<span>Ampliar ↗</span></span>
+              </button>
+              <button class="maquette-tile" type="button" data-maquette="1" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Nosotros">
+                <img src="img/maquetacion/IMG-20261017-WA0074.jpg" alt="Maqueta de la página Nosotros" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">02 · Nosotros<span>Ampliar ↗</span></span>
+              </button>
+              <button class="maquette-tile" type="button" data-maquette="2" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Programas">
+                <img src="img/maquetacion/IMG-20261017-WA0075.jpg" alt="Maqueta de la página Programas" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">03 · Programas<span>Ampliar ↗</span></span>
+              </button>
+              <button class="maquette-tile" type="button" data-maquette="3" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Música">
+                <img src="img/maquetacion/IMG-20261017-WA0073.jpg" alt="Maqueta de la página Música" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">04 · Música<span>Ampliar ↗</span></span>
+              </button>
+              <button class="maquette-tile" type="button" data-maquette="4" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Danza">
+                <img src="img/maquetacion/IMG-20261017-WA0070.jpg" alt="Maqueta de la página Danza" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">05 · Danza<span>Ampliar ↗</span></span>
+              </button>
+              <button class="maquette-tile" type="button" data-maquette="5" aria-haspopup="dialog" aria-controls="maquetteDialog" aria-label="Ampliar maqueta de Contacto">
+                <img src="img/maquetacion/IMG-20261017-WA0072.jpg" alt="Maqueta de la página Contacto" loading="lazy" width="400" height="420" />
+                <span class="maquette-caption">06 · Contacto<span>Ampliar ↗</span></span>
+              </button>
             </div>
           </div>
         </section>
@@ -879,6 +908,18 @@
           </div>
         </section>
 
+        <section class="slide" aria-labelledby="publishingTitle">
+          <div class="slide-inner">
+            <span class="step">Del repositorio a la web · Publicación y verificación</span>
+            <h2 id="publishingTitle">Publicar es también comprobar.</h2>
+            <div class="grid-2">
+              <article class="card tonal"><h3>1. Publicación en GitHub</h3><ol><li>Guardar y subir los cambios a la rama <code>main</code>.</li><li>GitHub Actions prepara la carpeta <code>docs</code> como sitio estático.</li><li>El trabajo de despliegue publica el contenido en GitHub Pages.</li><li>Confirmar el estado correcto del flujo y abrir la dirección pública.</li></ol></article>
+              <article class="card"><h3>2. Verificación de las páginas</h3><ul><li>Recorrer Inicio, Nosotros, Programas, Música, Danza y Contacto.</li><li>Comprobar imágenes, enlaces, filtros, ventanas y presentación.</li><li>Probar teclado, tema oscuro y paneles en escritorio y móvil.</li><li>Verificar Google, Turnstile y el guardado tras configurar Firebase.</li></ul></article>
+            </div>
+            <p class="demo-note">GitHub Pages publica la web. La función y las reglas de Firebase se despliegan por separado; el formulario requiere ambas integraciones activas.</p>
+          </div>
+        </section>
+
         <section class="slide live-site-slide" aria-labelledby="liveSiteTitle">
           <div class="slide-inner">
             <span class="step">Demostración en vivo</span>
@@ -944,7 +985,7 @@
       <nav class="navigation" aria-label="Controles de la presentación">
         <span class="key-hint">Usa ← → o Espacio</span>
         <div class="progress-wrap">
-          <span class="progress-text" id="counter">1 / 15</span>
+          <span class="progress-text" id="counter">1 / 17</span>
           <div class="progress-track" aria-hidden="true">
             <div class="progress-bar" id="progress"></div>
           </div>
@@ -1058,7 +1099,7 @@
         if (slides[current].classList.contains("live-site-slide")) {
           if (!liveSite.getAttribute("src"))
             liveSite.src = liveSite.dataset.src;
-          document.querySelector("#musicCollapse").click();
+          if (!document.querySelector("#musicPlayer").hidden) document.querySelector("#musicCollapse").click();
         }
         counter.textContent = `${current + 1} / ${slides.length}`;
         progress.style.width = `${((current + 1) / slides.length) * 100}%`;
@@ -1074,6 +1115,7 @@
         liveSite.src = liveSite.dataset.src;
       });
       document.addEventListener("keydown", (event) => {
+        if (document.querySelector("dialog[open]")) return;
         if (
           event.target.closest(
             "button, a, input, select, textarea, [contenteditable='true']",
@@ -1093,5 +1135,21 @@
       });
       showSlide(0);
     </script>
+    <dialog id="maquetteDialog" class="hh-dialog image-dialog" aria-labelledby="maquetteTitle">
+      <header class="dialog-header">
+        <h2 id="maquetteTitle">Maqueta</h2>
+        <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar imagen ampliada" autofocus>×</button>
+      </header>
+      <figure class="image-stage">
+        <img id="maquetteImage" alt="" />
+        <figcaption id="maquetteCaption" aria-live="polite"></figcaption>
+      </figure>
+      <div class="viewer-toolbar">
+        <button id="maquettePrevious" class="viewer-control" type="button" aria-label="Ver maqueta anterior">←</button>
+        <a id="maquetteOriginal" class="viewer-original" target="_blank" rel="noopener noreferrer">Abrir imagen original ↗</a>
+        <button id="maquetteNext" class="viewer-control" type="button" aria-label="Ver maqueta siguiente">→</button>
+      </div>
+    </dialog>
+    <script type="module" src="js/maquetas.js"></script>
   </body>
 </html>
